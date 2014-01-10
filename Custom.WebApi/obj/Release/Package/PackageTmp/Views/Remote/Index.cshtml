@@ -1,0 +1,30 @@
+﻿<div data-role="page" data-theme="a" data-title="Control - easeaccess" data-ng-controller="home:main.home">
+    @*<ng-include src="'Shared/Header'"></ng-include>*@
+    @Html.Partial("Header")
+    <div data-role="content">
+        <div class="content-primary">
+            <h1>Ease Trading Access</h1>
+            <div id="content">{{ greeting }}</div>
+            <input type="text" data-ng-model="greeting" />
+            
+            <ul data-role="listview" data-inset="true" data-filter="true">
+                <li><a href="signIn">Sign In</a></li>
+                <li><a href="signUp">Sign Up</a></li>
+                <li><a href="admin">Admin</a></li>
+                <li><a href="data">Data</a></li>
+                <li><a href="map">Map</a></li>
+            </ul>
+        </div>
+        <div class="content-secondary">
+            <div data-role="fieldcontain">
+                <ul data-role="listview" data-inset="true" data-filter="false">
+                    <li><a href="signIn">Sign In</a></li>
+                    <li><a href="signUp">Sign Up</a></li>
+                    <li><a href="admin">Admin</a></li>
+                    <li><a href="data">Data</a></li>
+                    <li><a href="map">Map</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

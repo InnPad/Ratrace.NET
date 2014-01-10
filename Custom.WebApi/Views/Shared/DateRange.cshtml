@@ -1,0 +1,10 @@
+﻿<div class="ui-day-range wave-width" data-ng-model="slider" date-range>
+    <input class="ui-date-low" data-ng-model="slider.date.low" name="date-low" type="date" date-low />
+    <div class="ui-offset-range" range-track>
+        <input data-highlight="false" min="{{slider.offset.min}}" max="{{slider.offset.high}}" name="offset-slider-low" step="1" type="range" value="{{slider.offset.low}}" range-low />
+        <div class="ui-date-thumb" range-thumb></div>
+        <input data-highlight="false" min="{{slider.offset.low}}" max="{{slider.offset.max}}" name="offset-slider-high" step="1" type="range" value="{{slider.offset.high}}" range-high />
+    </div>
+    <input class="ui-date-high" data-ng-model="slider.date.high" name="date-high" type="date" date-high />
+</div>
+<div class="ui-range-slider"></div>

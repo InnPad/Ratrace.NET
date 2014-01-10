@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ReflectionModelStoreContainer" CdmEntityContainer="ReflectionModelContainer">
+    <EntitySetMapping Name="Terms">
+      <EntityTypeMapping TypeName="IsTypeOf(ReflectionModel.Term)">
+        <MappingFragment StoreEntitySet="Terms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Culture" ColumnName="Culture" />
+          <ScalarProperty Name="Sentence" ColumnName="Sentence" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Domains">
+      <EntityTypeMapping TypeName="IsTypeOf(ReflectionModel.Domain)">
+        <MappingFragment StoreEntitySet="Domains">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="IsTypeOf(ReflectionModel.Area)">
+        <MappingFragment StoreEntitySet="Areas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Members">
+      <EntityTypeMapping TypeName="IsTypeOf(ReflectionModel.Member)">
+        <MappingFragment StoreEntitySet="Members">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TermArea" TypeName="ReflectionModel.TermArea" StoreEntitySet="Areas">
+      <EndProperty Name="Term">
+        <ScalarProperty Name="Id" ColumnName="Term_Id" />
+      </EndProperty>
+      <EndProperty Name="Area">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TermDomain" TypeName="ReflectionModel.TermDomain" StoreEntitySet="Domains">
+      <EndProperty Name="Term">
+        <ScalarProperty Name="Id" ColumnName="Term_Id" />
+      </EndProperty>
+      <EndProperty Name="Domain">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TermMember" TypeName="ReflectionModel.TermMember" StoreEntitySet="Members">
+      <EndProperty Name="Term">
+        <ScalarProperty Name="Id" ColumnName="Term_Id" />
+      </EndProperty>
+      <EndProperty Name="Member">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AreaHierarchy" TypeName="ReflectionModel.AreaHierarchy" StoreEntitySet="Areas">
+      <EndProperty Name="DependentArea">
+        <ScalarProperty Name="Id" ColumnName="Principal_Id" />
+      </EndProperty>
+      <EndProperty Name="PrincipalArea">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Principal_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TermHierarchy" TypeName="ReflectionModel.TermHierarchy" StoreEntitySet="Terms">
+      <EndProperty Name="DependentTerm">
+        <ScalarProperty Name="Id" ColumnName="Principal_Id" />
+      </EndProperty>
+      <EndProperty Name="PrincipalTerm">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Principal_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AreaDomain" TypeName="ReflectionModel.AreaDomain" StoreEntitySet="Domains">
+      <EndProperty Name="Area">
+        <ScalarProperty Name="Id" ColumnName="Area_Id" />
+      </EndProperty>
+      <EndProperty Name="Domain">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DomainMember" TypeName="ReflectionModel.DomainMember" StoreEntitySet="Members">
+      <EndProperty Name="Domain">
+        <ScalarProperty Name="Id" ColumnName="Domain_Id" />
+      </EndProperty>
+      <EndProperty Name="Member">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

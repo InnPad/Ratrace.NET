@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>demo</name>
+    </assembly>
+    <members>
+        <member name="T:Custom.ElasticStars">
+            <summary>
+            HTML5 canvas Elastic Stars with KineticJS
+            </summary>
+        </member>
+        <member name="T:Custom.KineticDemo">
+            <summary>
+            HTML5 canvas demo with KineticJS
+            </summary>
+        </member>
+        <member name="T:Custom.QuantumSquiggle">
+            <summary>
+            HTML5 Canvas Quantum Squiggle with KineticJS
+            </summary>
+        </member>
+        <member name="T:Custom.ScatterPlot">
+            <summary>
+            HTML5 Canvas Scatter Plot with KineticJS
+            </summary>
+        </member>
+        <member name="T:Custom.TextSpiral">
+            <summary>
+            HTML5 canvas Text Spiral with KineticJS
+            </summary>
+        </member>
+        <member name="T:Custom.TextWave">
+            <summary>
+            HTML5 Canvas Text Wave with KineticJS
+            </summary>
+        </member>
+        <member name="T:Custom.FortuneWheel">
+            <summary>
+            HTML5 Canvas Wheel of Fortune with KineticJS
+            </summary>
+        </member>
+        <member name="T:Custom.OscillatingBlobs">
+            <summary>
+            HTML5 canvas Oscillating Blobs with KineticJS
+            </summary>
+        </member>
+    </members>
+</doc>

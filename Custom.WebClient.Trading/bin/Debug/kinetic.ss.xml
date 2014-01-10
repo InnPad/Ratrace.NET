@@ -1,0 +1,2371 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>kinetic.ss</name>
+    </assembly>
+    <members>
+        <member name="T:Kinetic.Animation">
+            <summary>
+            A stage is used to contain multiple layers and handleanimations.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Animation.#ctor(System.Delegate,Kinetic.Node)">
+            <summary>
+            Stage constructor. A stage is used to contain multiple layers and handleanimations .
+            </summary>
+            <param name="func">Function executed on each animation frame</param>
+            <param name="node">Optional. Node to be redrawn.  Can be a layer or the stage. Not specifying a node will result in no redraw.</param>
+        </member>
+        <member name="M:Kinetic.Animation.isRunning">
+            <summary>
+            Determine if animation is running or not.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Animation.start">
+            <summary>
+            Start animation
+            </summary>
+        </member>
+        <member name="M:Kinetic.Animation.stop">
+            <summary>
+            Stop animation
+            </summary>
+        </member>
+        <member name="T:Kinetic.Collection">
+            <summary>
+            Collection.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Collection.#ctor">
+            <summary>
+            Collection constructor.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Collection.apply(System.String,System.Object)">
+            <summary>
+            Apply a method to all nodes in the array.
+            </summary>
+            <param name="method"></param>
+            <param name="val"></param>
+        </member>
+        <member name="M:Kinetic.Collection.each(System.Delegate)">
+            <summary>
+            Iterate through node array.
+            </summary>
+            <param name="func"></param>
+        </member>
+        <member name="M:Kinetic.Node.#ctor(Kinetic.NodeConfig)">
+            <summary>
+            Node constructor.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.clone(System.Object)">
+            <summary>
+            Clone node.
+            </summary>
+            <param name="attrs"></param>
+        </member>
+        <member name="M:Kinetic.Node.create(System.String,System.Html.Element)">
+            <summary>
+            Create node with JSON string. De-serializtion does not generate custom shape drawing functions, images, or event handlers (this would make the	serialized object huge). If your app uses custom shapes, images, and event handlers (it probably does), then you need to select the appropriate shapes after loading the stage and set these properties via on(), setDrawFunc(), and setImage() methods
+            </summary>
+            <param name="JSON">String</param>
+            <param name="container">Optional container dom element used only if you're creating a stage node</param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.Destroy">
+            <summary>
+            Remove and destroy node
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.fire(System.String,System.Object)">
+            <summary>
+            Synthetically fire an event.
+            </summary>
+            <param name="eventType"></param>
+            <param name="obj">optional object which can be used to pass parameters</param>
+        </member>
+        <member name="M:Kinetic.Node.getAbsoluteOpacity">
+            <summary>
+            Get absolute opacity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getAbsolutePosition">
+            <summary>
+            Get absolute position relative to the top left corner of the stage container div
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getAbsoluteTransform">
+            <summary>
+            Get absolute transform of the node which takes into account its ancestor transforms
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getAbsoluteZIndex">
+            <summary>
+            Get absolute z-index which takes into account sibling and ancestor indices
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getAttrs">
+            <summary>
+            Get attrs
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getDragBoundFunc">
+            <summary>
+            Get dragBoundFunc
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getDraggable">
+            <summary>
+            Get draggable
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getDragOnTop">
+            <summary>
+            get flag which enables or disables automatically moving the draggable node to a temporary top layer to improve performance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getHeight">
+            <summary>
+            get height
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getId">
+            <summary>
+            Get id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getLayer">
+            <summary>
+            Get layer ancestor
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getLevel">
+            <summary>
+            Get node level in node tree. Returns an integer.
+            e.g. Stage level will always be 0. Layers will always be 1. Groups and Shapes will always be >= 2
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getListening">
+            <summary>
+            Determine if node is listening or not.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getName">
+            <summary>
+            Get name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getOffset">
+            <summary>
+            Get offset
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getOpacity">
+            <summary>
+            get opacity.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getParent">
+            <summary>
+            Get parent container
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getPosition">
+            <summary>
+            Get node position relative to parent
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getRotation">
+            <summary>
+            Get rotation in radians
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getRotationDeg">
+            <summary>
+            Get rotation in degrees
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getScale">
+            <summary>
+            Gt scale
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getSize">
+            <summary>
+            Get size
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getStage">
+            <summary>
+            Get stage ancestor
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getTransform">
+            <summary>
+            Get transform of the node
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getVisible">
+            <summary>
+            Determine if node is visible or not.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getWidth">
+            <summary>
+            get width
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getX">
+            <summary>
+            get x position
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getY">
+            <summary>
+            get y position
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.getZIndex">
+            <summary>
+            Get zIndex relative to the node's siblings who share the same parent
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.hide">
+            <summary>
+            Hide node.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.isDraggable">
+            <summary>
+            Get draggable.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.isDragging">
+            <summary>
+            Determine if node is currently in drag and drop mode
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.isListening">
+            <summary>
+            Alias of getListening()
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.isVisible">
+            <summary>
+            Alias of getVisible()
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.move(System.Number,System.Number)">
+            <summary>
+            Move node by an amount relative to its current position
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Kinetic.Node.moveDown">
+            <summary>
+            Move node down
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.moveTo(Kinetic.Container)">
+            <summary>
+            Move node to another container
+            </summary>
+            <param name="newContainer"></param>
+        </member>
+        <member name="M:Kinetic.Node.moveToBottom">
+            <summary>
+            Move node to the bottom of its siblings
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.moveToTop">
+            <summary>
+            Move node to the top of its siblings
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.moveUp">
+            <summary>
+            Move node up
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.off(System.String)">
+            <summary>
+            Remove event bindings from the node.
+            </summary>
+            <param name="typesStr"></param>
+        </member>
+        <member name="M:Kinetic.Node.on(System.String,System.Delegate)">
+            <summary>
+            Bind events to the node.
+            </summary>
+            <param name="typesStr"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Kinetic.Node.remove">
+            <summary>
+            Remove child from container, but don't destroy it
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.rotate(System.Number)">
+            <summary>
+            Rotate node by an amount in radians relative to its current rotation
+            </summary>
+            <param name="theta"></param>
+        </member>
+        <member name="M:Kinetic.Node.rotateDeg(System.Number)">
+            <summary>
+            Rotate node by an amount in degrees relative to its current rotation
+            </summary>
+            <param name="deg"></param>
+        </member>
+        <member name="M:Kinetic.Node.setAbsolutePosition(System.Number,System.Number)">
+            <summary>
+            Set absolute position
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Kinetic.Node.setAttrs(System.Object)">
+            <summary>
+            Set attrs
+            </summary>
+            <param name="?"></param>
+        </member>
+        <member name="M:Kinetic.Node.setDefaultAttrs(System.Object)">
+            <summary>
+            Set default attrs.
+            </summary>
+            <param name="confic"></param>
+        </member>
+        <member name="M:Kinetic.Node.setDragBoundFunc(System.Delegate)">
+            <summary>
+            Set drag bound function.
+            </summary>
+            <param name="dragBoundFunc"></param>
+        </member>
+        <member name="M:Kinetic.Node.setDraggable(System.Object)">
+            <summary>
+            set draggable
+            </summary>
+            <param name="draggable"></param>
+        </member>
+        <member name="M:Kinetic.Node.setDragOnTop(System.Object)">
+            <summary>
+            set flag which enables or disables automatically moving the draggable node to a temporary top layer to improve performance.
+            </summary>
+            <param name="dragOnTop"></param>
+        </member>
+        <member name="M:Kinetic.Node.setHeight(System.Number)">
+            <summary>
+            Set height
+            </summary>
+            <param name="height"></param>
+        </member>
+        <member name="M:Kinetic.Node.setId(System.String)">
+            <summary>
+            Set id
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Kinetic.Node.setListening(System.Object)">
+            <summary>
+            Listen or don't listen to events
+            </summary>
+            <param name="listening"></param>
+        </member>
+        <member name="M:Kinetic.Node.setName(System.String)">
+            <summary>
+            Set name
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Kinetic.Node.setOffset(System.Number,System.Number)">
+            <summary>
+            Set offset.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Kinetic.Node.setOpacity(System.Number)">
+            <summary>
+            Set opacity.
+            </summary>
+            <param name="opacity"></param>
+        </member>
+        <member name="M:Kinetic.Node.setPosition(System.Number,System.Number)">
+            <summary>
+            Set node position relative to parent
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Kinetic.Node.setRotation(System.Number)">
+            <summary>
+            Set rotation in radians
+            </summary>
+            <param name="theta"></param>
+        </member>
+        <member name="M:Kinetic.Node.setRotationDeg(System.Number)">
+            <summary>
+            Set rotation in degrees
+            </summary>
+            <param name="deg"></param>
+        </member>
+        <member name="M:Kinetic.Node.setScale(System.Number,System.Number)">
+            <summary>
+            Set scale
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Kinetic.Node.setSize(System.Number,System.Number)">
+            <summary>
+            Set size
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+        </member>
+        <member name="M:Kinetic.Node.setVisible(System.Boolean)">
+            <summary>
+            Set visible
+            </summary>
+            <param name="visible"></param>
+        </member>
+        <member name="M:Kinetic.Node.setWidth(System.Number)">
+            <summary>
+            Set width
+            </summary>
+            <param name="width"></param>
+        </member>
+        <member name="M:Kinetic.Node.setX(System.Number)">
+            <summary>
+            Set x position
+            </summary>
+            <param name="x"></param>
+        </member>
+        <member name="M:Kinetic.Node.setY(System.Number)">
+            <summary>
+            Set y position
+            </summary>
+            <param name="y"></param>
+        </member>
+        <member name="M:Kinetic.Node.setZIndex(System.Int32)">
+            <summary>
+            Set zIndex relative to siblings
+            </summary>
+            <param name="zIndex"></param>
+        </member>
+        <member name="M:Kinetic.Node.show">
+            <summary>
+            Show node
+            </summary>
+        </member>
+        <member name="M:Kinetic.Node.simulate(System.Object,System.Html.ElementEvent)">
+            <summary>
+            Simulate event with event bubbling
+            </summary>
+            <param name="eventType"></param>
+            <param name="evt"></param>
+        </member>
+        <member name="M:Kinetic.Node.toDataURL(Kinetic.ToImageConfig)">
+            <summary>
+            Creates a composite data URL and requires a callback because the composite is generated asynchronously.
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.toImage(Kinetic.ToImageConfig)">
+            <summary>
+            Converts node into an image.
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.toJSON">
+            <summary>
+            Convert Node into a JSON string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.toObject">
+            <summary>
+            Convert Node into an object for serialization.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Node.transitionTo(Kinetic.TransitionConfig)">
+            <summary>
+            transition node to another state.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Container.#ctor(Kinetic.NodeConfig)">
+            <summary>
+            Container constructor.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Container.add(Kinetic.Node)">
+            <summary>
+            Add node to container
+            </summary>
+            <param name="child"></param>
+        </member>
+        <member name="M:Kinetic.Container.clone(System.Object)">
+            <summary>
+            Clone node
+            </summary>
+            <param name="attrs"></param>
+        </member>
+        <member name="M:Kinetic.Container.get(System.String)">
+            <summary>
+            Return an array of nodes that match the selector.
+            </summary>
+            <param name="selector"></param>
+        </member>
+        <member name="M:Kinetic.Container.getChildren">
+            <summary>
+            Get children
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Container.getIntersections(Kinetic.Point)">
+            <summary>
+            get shapes that intersect a point
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Container.isAncestorOf(Kinetic.Node)">
+            <summary>
+            Determine if node is an ancestorof descendant
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Container.removeChildren">
+            <summary>
+            Remove all children
+            </summary>
+        </member>
+        <member name="M:Kinetic.Filters.Brighten(System.Object,Kinetic.BrightenConfig)">
+            <summary>
+            Brighten Filter.
+            </summary>
+            <param name="imageData"></param>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Filters.Grayscale(System.Object,System.Object)">
+            <summary>
+            Grayscale Filter.
+            </summary>
+            <param name="imageData"></param>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Filters.Invert(System.Object,System.Object)">
+            <summary>
+            Invert Filter.
+            </summary>
+            <param name="imageData"></param>
+            <param name="config"></param>
+        </member>
+        <member name="F:Kinetic.BrightenConfig.val">
+            <summary>
+            Brightness number from -255 to 255.  Positive values increase the brightness and negative values decrease the brightness, making the image darker.
+            </summary>
+        </member>
+        <member name="F:Kinetic.Point.x">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+        <member name="F:Kinetic.Point.y">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.#ctor(Kinetic.ShapeConfig)">
+            <summary>
+            Shape constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Shape.disableDashArray">
+            <summary>
+            Disable dash array
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.disableFill">
+            <summary>
+            Disable fill
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.disableShadow">
+            <summary>
+            Disable shadow
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.disableStroke">
+            <summary>
+            Disable stroke
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.enableDashArray">
+            <summary>
+            enable dash array
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.enableFill">
+            <summary>
+            Enable fill
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.enableShadow">
+            <summary>
+            Enable shadow
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.enableStroke">
+            <summary>
+            Enable stroke
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.getCanvas">
+            <summary>
+            Get canvas renderer tied to the layer. Note that this returns a canvas renderer, not a canvas element.
+            </summary>
+            <returns>a canvas renderer</returns>
+        </member>
+        <member name="M:Kinetic.Shape.getContext">
+            <summary>
+            Get canvas context tied to the layer
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getCornerRadius">
+            <summary>
+            Get corner radius
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getDashArray">
+            <summary>
+            Get dash array
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getDrawFunc">
+            <summary>
+            Get draw function
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getDrawHitFunc">
+            <summary>
+            Get draw hit function
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFill">
+            <summary>
+            Get fill color
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillLinearGradientColorStops(System.Object)">
+            <summary>
+            Get fill linear gradient color stops
+            </summary>
+            <param name="colorStops"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillLinearGradientEndPoint">
+            <summary>
+            Get fill linear gradient end point
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillLinearGradientStartPoint">
+            <summary>
+            Get fill linear gradient start point
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPatternImage">
+            <summary>
+            Get fill pattern image
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPatternOffset">
+            <summary>
+            Get fill pattern offset
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPatternRepeat">
+            <summary>
+            Get fill pattern repeat
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPatternRotation">
+            <summary>
+            Get fill pattern rotation in radians
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPatternRotationDeg">
+            <summary>
+            Get fill pattern rotation in degrees
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPatternScale">
+            <summary>
+            Get fill pattern scale
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPatternX">
+            <summary>
+            Get fill pattern x
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPatternY">
+            <summary>
+            Get fill pattern y
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillPriority">
+            <summary>
+            Get fill priority
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillRadialGradientColorStops">
+            <summary>
+            Get fill radial gradient color stops
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillRadialGradientEndPoint">
+            <summary>
+            Get fill radial gradient end point
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillRadialGradientEndRadius">
+            <summary>
+            Get fill radial gradient end radius
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillRadialGradientStartPoint">
+            <summary>
+            Get fill radial gradient start point
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getFillRadialGradientStartRadius">
+            <summary>
+            Get fill radial gradient start radius
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getLineCap">
+            <summary>
+            Get line cap
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getLineJoin">
+            <summary>
+            Get line join
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getShadowBlur">
+            <summary>
+            Get shadow blur
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.getShadowColor">
+            <summary>
+            Get shadow color
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getShadowOffset">
+            <summary>
+            get shadow offset
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getShadowOpacity">
+            <summary>
+            Get shadow opacity.
+            </summary>
+            <returns>A value between 0 and 1</returns>
+        </member>
+        <member name="M:Kinetic.Shape.getStroke">
+            <summary>
+            Get stroke color
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.getStrokeWidth">
+            <summary>
+            Get stroke width
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.hasFill">
+            <summary>
+            Returns whether or not a fill will be rendered
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.hasShadow">
+            <summary>
+            Returns whether or not a shadow will be rendered
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.intersects(System.Object)">
+            <summary>
+            Determines if point is in the shape
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Shape.setCornerRadius(System.Number)">
+            <summary>
+            Set corner radius
+            </summary>
+            <param name="corner"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setDashArray(System.Array)">
+            <summary>
+            Set dash array.
+            </summary>
+            <param name="dashArray"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setDrawFunc(System.Delegate)">
+            <summary>
+            Set draw function
+            </summary>
+            <param name="drawFunc"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setDrawHitFunc(System.Delegate)">
+            <summary>
+            Set draw hit function used for hit detection
+            </summary>
+            <param name="drawHitFunc"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFill(System.Object)">
+            <summary>
+            Set fill color
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillLinearGradientColorStops(System.Object)">
+            <summary>
+            Set fill linear gradient color stops
+            </summary>
+            <param name="colorStops"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillLinearGradientEndPoint(Kinetic.Point)">
+            <summary>
+            Set fill linear gradient end point
+            </summary>
+            <param name="endPoint"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillLinearGradientStartPoint(System.Object)">
+            <summary>
+            Set fill linear gradient start point
+            </summary>
+            <param name="startPoint"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPatternImage(Kinetic.Image)">
+            <summary>
+            Set fill pattern image
+            </summary>
+            <param name="image"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPatternOffset(Custom.Vector)">
+            <summary>
+            Set fill pattern offset
+            </summary>
+            <param name="offset"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPatternRepeat(System.Object)">
+            <summary>
+            Set fill pattern repeat
+            </summary>
+            <param name="repeat"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPatternRotation(System.Number)">
+            <summary>
+            Set fill pattern rotation in radians
+            </summary>
+            <param name="rotation"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPatternRotationDeg(System.Number)">
+            <summary>
+            Set fill pattern rotation in degrees
+            </summary>
+            <param name="rotationDeg"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPatternScale(System.Number)">
+            <summary>
+            Set fill pattern scale
+            </summary>
+            <param name="scale"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPatternX(System.Number)">
+            <summary>
+            Set fill pattern x
+            </summary>
+            <param name="x"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPatternY(System.Number)">
+            <summary>
+            Set fill pattern y
+            </summary>
+            <param name="y"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillPriority(System.Number)">
+            <summary>
+            Set fill priority
+            </summary>
+            <param name="priority"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillRadialGradientColorStops(System.Object)">
+            <summary>
+            Set fill radial gradient color stops
+            </summary>
+            <param name="colorStops"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillRadialGradientEndPoint(Kinetic.Point)">
+            <summary>
+            Set fill radial gradient end point
+            </summary>
+            <param name="endPoint"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillRadialGradientEndRadius(System.Number)">
+            <summary>
+            Set fill radial gradient end radius
+            </summary>
+            <param name="radius"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillRadialGradientStartPoint(Kinetic.Point)">
+            <summary>
+            Set fill radial gradient start point
+            </summary>
+            <param name="startPoint"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setFillRadialGradientStartRadius(System.Number)">
+            <summary>
+            Set fill radial gradient start radius
+            </summary>
+            <param name="radius"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setLineCap(System.Object)">
+            <summary>
+            Set line cap.
+            </summary>
+            <param name="lineCap"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setLineJoin">
+            <summary>
+            Set line join
+            </summary>
+        </member>
+        <member name="M:Kinetic.Shape.setShadowBlur(System.Object)">
+            <summary>
+            Set shadow blur
+            </summary>
+            <param name="blur"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setShadowColor(System.Object)">
+            <summary>
+            Set shadow color
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setShadowOffset(Custom.Vector)">
+            <summary>
+            Set shadow offset
+            </summary>
+            <param name="offset"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setShadowOpacity(System.Number)">
+            <summary>
+            Set shadow opacity
+            </summary>
+            <param name="opacity">Must be a value between 0 and 1</param>
+        </member>
+        <member name="M:Kinetic.Shape.setStroke(System.Object)">
+            <summary>
+            Set stroke color
+            </summary>
+            <param name="stroke"></param>
+        </member>
+        <member name="M:Kinetic.Shape.setStrokeWidth(System.Number)">
+            <summary>
+            Set stroke width
+            </summary>
+            <param name="strokeWidth"></param>
+        </member>
+        <member name="F:Kinetic.NodeConfig.x">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.y">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.width">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.height">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.visible">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.listening">
+            <summary>
+            Optional, whether or not the node is listening for events
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.id">
+            <summary>
+            Optional, unique id
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.name">
+            <summary>
+            Optional, non-unique name
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.opacity">
+            <summary>
+            Optional, determines node opacity. Can be any number between 0 and 1
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.scale">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.rotation">
+            <summary>
+            Optional, rotation in radians
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.rotationDeg">
+            <summary>
+            Optional, rotation in degrees
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.offset">
+            <summary>
+            Optional, offset from center point and rotation point
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.draggable">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.NodeConfig.dragBoundFunc">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fill">
+            <summary>
+            Optional, fill color
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillPatternImage">
+            <summary>
+            Optional, fill pattern image
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillPatternX">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillPatternY">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillPatternOffset">
+            <summary>
+            Optional, array with two elements or object with x and y component
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillPatternScale">
+            <summary>
+            Optional, array with two elements or object with x and y component
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillPatternRotation">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillPatternRepeat">
+            <summary>
+            Optional, can be 'repeat', 'repeat-x', 'repeat-y', or 'no-repeat'. The default is 'no-repeat'
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillLinearGradientStartPoint">
+            <summary>
+            Optional, array with two elements or object with x and y component
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillLinearGradientEndPoint">
+            <summary>
+            Optional, array with two elements or object with x and y component
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillLinearGradientColorStops">
+            <summary>
+            Optional, array of color stops
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillRadialGradientStartPoint">
+            <summary>
+            Optional, array with two elements or object with x and y component
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillRadialGradientEndPoint">
+            <summary>
+            Optional, array with two elements or object with x and y component
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillRadialGradientStartRadius">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillRadialGradientEndRadius">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillRadialGradientColorStops">
+            <summary>
+            Optional, array of color stops
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillEnabled">
+            <summary>
+            Optional, flag which enables or disables the fill. The default value is true
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.fillPriority">
+            <summary>
+            Optional, can be color, linear-gradient, radial-graident, or pattern. The default value is color. The fillPriority property makes it really easy to toggle between different fill types. For example, if you want to toggle between a fill color style and a fill pattern style, simply set the fill property and the fillPattern properties, and then use setFillPriority('color') to render the shape with a color fill, or use setFillPriority('pattern') to render the shape with the pattern fill configuration
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.stroke">
+            <summary>
+            Optional, stroke color
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.strokeWidth">
+            <summary>
+            Optional, stroke width
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.strokeEnabled">
+            <summary>
+            Optional, flag which enables or disables the stroke. The default value is true
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.lineJoin">
+            <summary>
+            Optional, can be miter, round, or bevel. The default is miter
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.lineCap">
+            <summary>
+            Optional, can be butt, round, or sqare. The default is butt
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.shadowColor">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.shadowBlur">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.shadowOffset">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.shadowOpacity">
+            <summary>
+            Optional, shadow opacity. Can be any real number between 0 and 1
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.shadowEnabled">
+            <summary>
+            Optional, flag which enables or disables the shadow. The default value is true
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.dashArray">
+            <summary>
+            Optional
+            </summary>
+        </member>
+        <member name="F:Kinetic.ShapeConfig.dashArrayEnabled">
+            <summary>
+            Optional, flag which enables or disables the dashArray. The default value is true
+            </summary>
+        </member>
+        <member name="T:Kinetic.Blob">
+            <summary>
+            Blobs are defined by an array of points and a tension.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Line.#ctor(Kinetic.ShapeConfig)">
+            <summary>
+            Line constructor. Lines are defined by an array of points
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Line.getPoints">
+            <summary>
+            Get points array
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Line.setPoints(Kinetic.Point[])">
+            <summary>
+            Set points array
+            </summary>
+            <param name="points">Can be a flattened array of points, an array of point arrays, or an array of point objects. e.g. [0,1,2,3], [[0,1],[2,3]] and [{x:0,y:1},{x:2,y:3}] are equivalent</param>
+        </member>
+        <member name="M:Kinetic.Spline.#ctor(Kinetic.SplineConfig)">
+            <summary>
+            Spline constructor. Splines are defined by an array of points and a tension
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Spline.getTension">
+            <summary>
+            Get tension
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Spline.setTension(System.Number)">
+            <summary>
+            Set tension
+            </summary>
+            <param name="tension"></param>
+        </member>
+        <member name="M:Kinetic.Blob.#ctor(Kinetic.SplineConfig)">
+            <summary>
+            Blob constructor.  Blobs are defined by an array of points and a tension 
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Circle.#ctor(Kinetic.ShapeConfig)">
+            <summary>
+            Circle constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Circle.getRadius">
+            <summary>
+            Get radius.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Circle.setRadius(System.Number)">
+            <summary>
+            Set radius.
+            </summary>
+            <param name="radius"></param>
+        </member>
+        <member name="F:Kinetic.CircleConfig.fill">
+            <summary>
+            Optional fill.
+            </summary>
+        </member>
+        <member name="F:Kinetic.CircleConfig.fillPatternImageOptional">
+            <summary>
+            Fill pattern image.
+            </summary>
+        </member>
+        <member name="T:Kinetic.Ellipse">
+            <summary>
+            Ellipse.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Ellipse.#ctor(Kinetic.ShapeConfig)">
+            <summary>
+            Ellipse constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Ellipse.getRadius">
+            <summary>
+            Get radius.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Ellipse.setRadius(System.Number)">
+            <summary>
+            Set radius.
+            </summary>
+            <param name="radius"></param>
+        </member>
+        <member name="T:Kinetic.Image">
+            <summary>
+            Image.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Image.#ctor(Kinetic.ImageConfig)">
+            <summary>
+            Image constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Image.applyFilter(Kinetic.ImageConfig,System.Object,Kinetic.ShapeConfig,System.Delegate)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="config"></param>
+            <param name="filter"></param>
+            <param name="config2"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="M:Kinetic.Image.clearImageHitRegion">
+            <summary>
+            Clear image hit region.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Image.createImageHitRegion(System.Delegate)">
+            <summary>
+            Create image hit region which enables more accurate hit detection mapping of the image by avoiding event detections for transparent pixels
+            </summary>
+            <param name="callback"></param>
+        </member>
+        <member name="M:Kinetic.Image.getCrop">
+            <summary>
+            Get crop.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Image.getImage">
+            <summary>
+            Get image.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Image.setCrop(System.Object)">
+            <summary>
+            Set crop.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Image.setImage(System.Html.ImageElement)">
+            <summary>
+            Set image.
+            </summary>
+            <param name="image"></param>
+        </member>
+        <member name="F:Kinetic.ImageConfig.crop">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+        <member name="F:Kinetic.LineConfig.points">
+            <summary>
+            Can be a flattened array of points, an array of point arrays, or an array of point objects. e.g. [0,1,2,3], [[0,1],[2,3]] and [{x:0,y:1},{x:2,y:3}] are equivalent
+            </summary>
+        </member>
+        <member name="T:Kinetic.Path">
+            <summary>
+            Path.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Path.#ctor(Kinetic.PathConfig)">
+            <summary>
+            Path constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Path.getData">
+            <summary>
+            Get SVG path data string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Path.parsePathData(System.String)">
+            <summary>
+            Get parsed data array from the data string.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Path.setData(System.String)">
+            <summary>
+            Set SVG path data string.
+            </summary>
+            <param name="SVG"></param>
+        </member>
+        <member name="F:Kinetic.PathConfig.data">
+            <summary>
+            SVG data string
+            </summary>
+        </member>
+        <member name="T:Kinetic.Polygon">
+            <summary>
+            Polygon.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Polygon.#ctor(Kinetic.PolygonConfig)">
+            <summary>
+            Polygon constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Polygon.getPoints">
+            <summary>
+            Get points array
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Polygon.setPoints(Kinetic.Point[])">
+            <summary>
+            Set points array
+            </summary>
+            <param name="points"></param>
+        </member>
+        <member name="F:Kinetic.PolygonConfig.points">
+            <summary>
+            Can be a flattened array of points, an array of point arrays, or an array of point objects. e.g. [0,1,2,3], [[0,1],[2,3]] and [{x:0,y:1},{x:2,y:3}] are equivalent
+            </summary>
+        </member>
+        <member name="T:Kinetic.Rect">
+            <summary>
+            Rect.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Rect.#ctor(Kinetic.RectConfig)">
+            <summary>
+            Rect constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="F:Kinetic.RectConfig.cornerRadius">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+        <member name="T:Kinetic.RectangularPolygon">
+            <summary>
+            RegularPolygon.
+            </summary>
+        </member>
+        <member name="M:Kinetic.RectangularPolygon.#ctor(Kinetic.ShapeConfig)">
+            <summary>
+            RegularPolygon constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.RectangularPolygon.getRadius">
+            <summary>
+            Get radius
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.RectangularPolygon.getSides">
+            <summary>
+            Get number of sides
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.RectangularPolygon.setRadius(System.Number)">
+            <summary>
+            Set radius
+            </summary>
+            <param name="radius"></param>
+        </member>
+        <member name="M:Kinetic.RectangularPolygon.setSides(System.Number)">
+            <summary>
+            set number of sides
+            </summary>
+            <param name="sides"></param>
+        </member>
+        <member name="F:Kinetic.SplineConfig.tension">
+            <summary>
+            Optional, default value is 1. Higher values will result in a more curvy line. A value of 0 will result in no interpolation.
+            </summary>
+        </member>
+        <member name="T:Kinetic.Sprite">
+            <summary>
+            Sprite.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Sprite.#ctor(Kinetic.SpriteConfig)">
+            <summary>
+            Sprite constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Sprite.afterFrame(System.Number,System.Delegate)">
+            <summary>
+            Set after frame event handler.
+            </summary>
+            <param name="index"></param>
+            <param name="func"></param>
+        </member>
+        <member name="M:Kinetic.Sprite.getAnimation">
+            <summary>
+            Get animation key.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Sprite.getAnimations">
+            <summary>
+            Get animations object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Sprite.getIndex">
+            <summary>
+            Get animation frame index.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Sprite.setAnimation(System.String)">
+            <summary>
+            Set animation key.
+            </summary>
+            <param name="anim"></param>
+        </member>
+        <member name="M:Kinetic.Sprite.setAnimations(Kinetic.Animation)">
+            <summary>
+            Set animations object.
+            </summary>
+            <param name="animations"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Sprite.setIndex(System.Int32)">
+            <summary>
+            Set animation frame index.
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:Kinetic.Sprite.start">
+            <summary>
+            Start sprite animation.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Sprite.stop">
+            <summary>
+            Stop sprite animation.
+            </summary>
+        </member>
+        <member name="F:Kinetic.SpriteConfig.animation">
+            <summary>
+            Animation key
+            </summary>
+        </member>
+        <member name="F:Kinetic.SpriteConfig.animations">
+            <summary>
+            Animation map
+            </summary>
+        </member>
+        <member name="F:Kinetic.SpriteConfig.index">
+            <summary>
+            Optional. Animation index.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Star.getInnerRadius">
+            <summary>
+            Get inner radius.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Star.getNumPoints">
+            <summary>
+            Get number of points.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Star.getOuterRadius">
+            <summary>
+            Get outer radius.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Star.setInnerRadius(System.Number)">
+            <summary>
+            Set inner radius
+            </summary>
+            <param name="radius"></param>
+        </member>
+        <member name="M:Kinetic.Star.setNumPoints(System.Int32)">
+            <summary>
+            Set number of points.
+            </summary>
+            <param name="points"></param>
+        </member>
+        <member name="M:Kinetic.Star.setOuterRadius(System.Number)">
+            <summary>
+            Set outer radius
+            </summary>
+            <param name="radius"></param>
+        </member>
+        <member name="T:Kinetic.Text">
+            <summary>
+            Text.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Text.#ctor(Kinetic.TextConfig)">
+            <summary>
+            Text constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Text.getAlign">
+            <summary>
+            Get horizontal align.
+            </summary>
+            <returns>align can be 'left', 'center', or 'right'</returns>
+        </member>
+        <member name="M:Kinetic.Text.getFontFamily">
+            <summary>
+            Get font family.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Text.getFontSize">
+            <summary>
+            Get font size.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Text.getFontStyle">
+            <summary>
+            Get font style. Can be 'normal', 'italic', or 'bold'. 'normal' is the default.
+            </summary>
+            <returns>Can be 'normal', 'italic', or 'bold'. 'normal' is the default.</returns>
+        </member>
+        <member name="M:Kinetic.Text.getHeight">
+            <summary>
+            Get height.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Text.getLineHeight">
+            <summary>
+            Get line height. Sefault is 1
+            </summary>
+            <returns>Line height. Sefault is 1</returns>
+        </member>
+        <member name="M:Kinetic.Text.getPadding">
+            <summary>
+            Get padding
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Text.getText">
+            <summary>
+            Get text.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Text.getTextHeight">
+            <summary>
+            Get text height.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Text.getTextWidth">
+            <summary>
+            Get text width.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Text.getWidth">
+            <summary>
+            Get width.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Text.setAlign(System.String)">
+            <summary>
+            Set horizontal align of text.
+            </summary>
+            <param name="align">align can be 'left', 'center', or 'right'</param>
+        </member>
+        <member name="M:Kinetic.Text.setFontFamily(System.String)">
+            <summary>
+            Set font family.
+            </summary>
+            <param name="fontFamily"></param>
+        </member>
+        <member name="M:Kinetic.Text.setFontSize(System.Number)">
+            <summary>
+            Set font size in pixels.
+            </summary>
+            <param name="fontSize"></param>
+        </member>
+        <member name="M:Kinetic.Text.setFontStyle(System.String)">
+            <summary>
+            Set font style. Can be 'normal', 'italic', or 'bold'. 'normal' is the default.
+            </summary>
+            <param name="fontStyle">can be 'normal', 'italic', or 'bold'. 'normal' is the default.</param>
+        </member>
+        <member name="M:Kinetic.Text.setLineHeight(System.Number)">
+            <summary>
+            Set line height.
+            </summary>
+            <param name="lineHeight"></param>
+        </member>
+        <member name="M:Kinetic.Text.setPadding(System.Int32)">
+            <summary>
+            Set padding.
+            </summary>
+            <param name="padding"></param>
+        </member>
+        <member name="M:Kinetic.Text.setText(System.String)">
+            <summary>
+            Set text.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="F:Kinetic.TextPathConfig.fontFamily">
+            <summary>
+            Optional. Default is Calibri
+            </summary>
+        </member>
+        <member name="F:Kinetic.TextPathConfig.fontSize">
+            <summary>
+            Optional. Default is 12
+            </summary>
+        </member>
+        <member name="F:Kinetic.TextPathConfig.fontStyle">
+            <summary>
+            Optional. Can be normal, bold, or italic. Default is normal.
+            </summary>
+        </member>
+        <member name="F:Kinetic.TextPathConfig.text">
+            <summary>
+            Text
+            </summary>
+        </member>
+        <member name="F:Kinetic.TextConfig.align">
+            <summary>
+            Optional. Can be left, center, or right.
+            </summary>
+        </member>
+        <member name="F:Kinetic.TextConfig.padding">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+        <member name="F:Kinetic.TextConfig.width">
+            <summary>
+            Optional. Default is auto.
+            </summary>
+        </member>
+        <member name="F:Kinetic.TextConfig.height">
+            <summary>
+            Optional. default is auto.
+            </summary>
+        </member>
+        <member name="F:Kinetic.TextConfig.lineHeight">
+            <summary>
+            Optional. Default is 1.
+            </summary>
+        </member>
+        <member name="T:Kinetic.TextPath">
+            <summary>
+            Path.
+            </summary>
+        </member>
+        <member name="M:Kinetic.TextPath.#ctor(Kinetic.TextPathConfig)">
+            <summary>
+            Path constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.TextPath.getFontFamily">
+            <summary>
+            Get font family.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.TextPath.getFontSize">
+            <summary>
+            Get font size.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.TextPath.getFontStyle">
+            <summary>
+            Get font style.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.TextPath.getText">
+            <summary>
+            Get text.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.TextPath.getTextHeight">
+            <summary>
+            Get text height in pixels.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.TextPath.getTextWidth">
+            <summary>
+            Get text width in pixels.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.TextPath.setFontFamily(System.String)">
+            <summary>
+            Set font family.
+            </summary>
+            <param name="fontFamily"></param>
+        </member>
+        <member name="M:Kinetic.TextPath.setFontSize(System.Number)">
+            <summary>
+            Set font size
+            </summary>
+            <param name="fontSize"></param>
+        </member>
+        <member name="M:Kinetic.TextPath.setFontStyle(System.String)">
+            <summary>
+            Set font style. Can be 'normal', 'italic', or 'bold'. 'normal' is the default. 
+            </summary>
+            <param name="fontStyle"></param>
+        </member>
+        <member name="M:Kinetic.TextPath.setText(System.String)">
+            <summary>
+            Set text.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="T:Kinetic.Wedge">
+            <summary>
+            Wedge.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Wedge.#ctor(Kinetic.ShapeConfig)">
+            <summary>
+            Wedge constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Wedge.getAngle">
+            <summary>
+            Get angle.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Wedge.getAngleDeg">
+            <summary>
+            Get angle in degrees.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Wedge.getClockwise">
+            <summary>
+            Get clockwise.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Wedge.getRadius">
+            <summary>
+            Get radius.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Wedge.setAngle(System.Number)">
+            <summary>
+            Set angle.
+            </summary>
+            <param name="angle"></param>
+        </member>
+        <member name="M:Kinetic.Wedge.setAngleDeg(System.Number)">
+            <summary>
+            Set angle in degrees.
+            </summary>
+            <param name="deg"></param>
+        </member>
+        <member name="M:Kinetic.Wedge.setClockwise(System.Boolean)">
+            <summary>
+            Set clockwise draw direction. If set to true, the wedge will be drawn clockwise If set to false, the wedge will be drawn anti-clockwise. The default is false. 
+            </summary>
+            <param name="clockwise"></param>
+        </member>
+        <member name="M:Kinetic.Wedge.setRadius(System.Number)">
+            <summary>
+            Set radius.
+            </summary>
+            <param name="radius"></param>
+        </member>
+        <member name="F:Kinetic.WedgeConfig.clockwise">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+        <member name="T:Kinetic.Stage">
+            <summary>
+            Stage.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Stage.#ctor(Kinetic.StageConfig)">
+            <summary>
+            Stage constructor.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Stage.Add(Kinetic.Layer)">
+            <summary>
+            Add layer to stage
+            </summary>
+            <param name="layer"></param>
+        </member>
+        <member name="M:Kinetic.Stage.clear">
+            <summary>
+            Clear all layers
+            </summary>
+        </member>
+        <member name="M:Kinetic.Stage.draw">
+            <summary>
+            Draw layer scene graphs
+            </summary>
+        </member>
+        <member name="M:Kinetic.Stage.drawHit">
+            <summary>
+            Draw layer hit graphs
+            </summary>
+        </member>
+        <member name="M:Kinetic.Stage.getContainer">
+            <summary>
+            Get container DOM element
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Stage.getContent">
+            <summary>
+            Get stage content div element which has the the class name "kineticjs-content"
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Stage.getDragLayer">
+            <summary>
+            Get drag and drop layer
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Stage.getIntersection(System.Object)">
+            <summary>
+            Get intersection object that contains shape and pixel data
+            </summary>
+            <param name="pos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Stage.getMousePosition">
+            <summary>
+            Get mouse position for desktop apps
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Stage.getTouchPosition">
+            <summary>
+            Get touch position for mobile apps
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Stage.getUserPosition">
+            <summary>
+            Get user position which can be a touch position or mouse position
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Stage.reset">
+            <summary>
+            Reset stage to default state
+            </summary>
+        </member>
+        <member name="M:Kinetic.Stage.setContainer(System.Html.Element)">
+            <summary>
+            Set container dom element which contains the stage wrapper div element
+            </summary>
+            <param name="container"></param>
+        </member>
+        <member name="F:Kinetic.StageConfig.container">
+            <summary>
+            Container id or DOM element
+            </summary>
+        </member>
+        <member name="T:Kinetic.Transform">
+            <summary>
+            Transform
+            </summary>
+        </member>
+        <member name="M:Kinetic.Transform.#ctor">
+            <summary>
+            Transform constructor.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Transform.getMatrix">
+            <summary>
+            Return matrix.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Transform.getTranslation">
+            <summary>
+            Returns the translation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Transform.invert">
+            <summary>
+            Invert the matrix.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Transform.multiply(System.Object)">
+            <summary>
+            Transform multiplication.
+            </summary>
+            <param name="matrix"></param>
+        </member>
+        <member name="M:Kinetic.Transform.rotate(System.Number)">
+            <summary>
+            Apply rotation.
+            </summary>
+            <param name="rad"></param>
+        </member>
+        <member name="M:Kinetic.Transform.scale(System.Number,System.Number)">
+            <summary>
+            Apply scale.
+            </summary>
+            <param name="sx"></param>
+            <param name="sy"></param>
+        </member>
+        <member name="M:Kinetic.Transform.translate(System.Number,System.Number)">
+            <summary>
+            Apply translation.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Kinetic.Transition.#ctor(Kinetic.Node,Kinetic.TransitionConfig)">
+            <summary>
+            Transition constructor. The transitionTo() Node method returns a reference to the transition object which you can use to stop, resume, or restart the transition
+            </summary>
+            <param name="node"></param>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Transition.resume">
+            <summary>
+            Resume transition
+            </summary>
+        </member>
+        <member name="M:Kinetic.Transition.start">
+            <summary>
+            Start transition
+            </summary>
+        </member>
+        <member name="M:Kinetic.Transition.stop">
+            <summary>
+            Stop transition
+            </summary>
+        </member>
+        <member name="T:Kinetic.TransitionConfig">
+            <summary>
+            Used to transition node to another state. Any property that can accept a real number can be transitioned, including x, y, rotation, opacity, strokeWidth, radius, scale.x, scale.y, offset.x, offset.y, etc. 
+            </summary>
+        </member>
+        <member name="F:Kinetic.TransitionConfig.duration">
+            <summary>
+            Duration that the transition runs in seconds.
+            </summary>
+        </member>
+        <member name="F:Kinetic.TransitionConfig.easing">
+            <summary>
+            Optional. Easing function. can be 'linear', 'ease-in', 'ease-out', 'ease-in-out', 'back-ease-in', 'back-ease-out', 'back-ease-in-out', 'elastic-ease-in', 'elastic-ease-out', 'elastic-ease-in-out', 'bounce-ease-out', 'bounce-ease-in', 'bounce-ease-in-out', 'strong-ease-in', 'strong-ease-out', or 'strong-ease-in-out'. 'linear' is the default.
+            </summary>
+        </member>
+        <member name="F:Kinetic.TransitionConfig.callback">
+            <summary>
+            Optional. Callback function to be executed when transition completes.
+            </summary>
+        </member>
+        <member name="T:Kinetic.Canvas">
+            <summary>
+            Canvas Renderer
+            </summary>
+        </member>
+        <member name="M:Kinetic.Canvas.#ctor(System.Number,System.Number,System.Object)">
+            <summary>
+            Canvas Renderer constructor
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="pixelRatio"></param>
+        </member>
+        <member name="M:Kinetic.Canvas.applyShadow(Kinetic.Shape,System.Delegate)">
+            <summary>
+            Apply shadow
+            </summary>
+            <param name="shape"></param>
+            <param name="drawFunc"></param>
+        </member>
+        <member name="M:Kinetic.Canvas.Fill(Kinetic.Shape)">
+            <summary>
+            Fill shape
+            </summary>
+            <param name="shape"></param>
+        </member>
+        <member name="M:Kinetic.Canvas.fillStroke(Kinetic.Shape)">
+            <summary>
+            Fill, stroke, and apply shadows will only be applied to either the fill or stroke.
+            </summary>
+            <param name="shape"></param>
+        </member>
+        <member name="M:Kinetic.Canvas.getContext">
+            <summary>
+            Get canvas context
+            </summary>
+        </member>
+        <member name="M:Kinetic.Canvas.getElement">
+            <summary>
+            Get canvas element
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Canvas.getHeight">
+            <summary>
+            Get height
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Canvas.getWidth">
+            <summary>
+            Get width
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Canvas.setHeight(System.Number)">
+            <summary>
+            Set height
+            </summary>
+            <param name="height"></param>
+        </member>
+        <member name="M:Kinetic.Canvas.setSize(System.Number,System.Number)">
+            <summary>
+            Set size
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+        </member>
+        <member name="M:Kinetic.Canvas.setWidth(System.Number)">
+            <summary>
+            Set width
+            </summary>
+            <param name="width"></param>
+        </member>
+        <member name="M:Kinetic.Canvas.stroke(Kinetic.Shape)">
+            <summary>
+            Stroke shape
+            </summary>
+            <param name="shape"></param>
+        </member>
+        <member name="M:Kinetic.Canvas.toDataURL(System.String,System.Number)">
+            <summary>
+            To data url
+            </summary>
+            <param name="mimeType"></param>
+            <param name="quality"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Kinetic.Group">
+            <summary>
+            Group constructor. Groups are used to contain shapes or other groups.
+            </summary>
+        </member>
+        <member name="T:Kinetic.Layer">
+            <summary>
+            Layers are tied to their own canvas element and are usedto contain groups or shapes.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Layer.#ctor(Kinetic.LayerConfig)">
+            <summary>
+            Layer constructor.
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Kinetic.Layer.afterDraw(System.Delegate)">
+            <summary>
+            Set after draw handler.
+            </summary>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Kinetic.Layer.beforeDraw(System.Delegate)">
+            <summary>
+            Set before draw handler.
+            </summary>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Kinetic.Layer.clear">
+            <summary>
+            Clear canvas tied to the layer
+            </summary>
+        </member>
+        <member name="M:Kinetic.Layer.draw">
+            <summary>
+            Draw children nodes.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Layer.drawHit">
+            <summary>
+            Draw children nodes on hit.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Layer.drawScene(Kinetic.Canvas)">
+            <summary>
+            Draw children nodes on scene.
+            </summary>
+            <param name="canvas"></param>
+        </member>
+        <member name="M:Kinetic.Layer.getCanvas">
+            <summary>
+            Get layer canvas.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Layer.getClearBeforeDraw">
+            <summary>
+            Get flag which determines if the layer is cleared or not before drawing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Layer.getContext">
+            <summary>
+            Get layer canvas context.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kinetic.Layer.remove">
+            <summary>
+            Remove layer from stage.
+            </summary>
+        </member>
+        <member name="M:Kinetic.Layer.setClearBeforeDraw(System.Boolean)">
+            <summary>
+            Set flag which determines if the layer is cleared or not before drawing.
+            </summary>
+            <param name="clearBeforeDraw"></param>
+        </member>
+        <member name="F:Kinetic.LayerConfig.clearBeforeDraw">
+            <summary>
+            Optional. Set this property to false if you don't wantto clear the canvas before each layer draw. The default value is true.
+            </summary>
+        </member>
+        <member name="F:Kinetic.ToImageConfig.callback">
+            <summary>
+            function executed when the composite has completed
+            </summary>
+        </member>
+        <member name="F:Kinetic.ToImageConfig.mimeType">
+            <summary>
+            Optional. Can be "image/png" or "image/jpeg". "image/png" is the default
+            </summary>
+        </member>
+        <member name="F:Kinetic.ToImageConfig.x">
+            <summary>
+            Optional. X position of canvas section.
+            </summary>
+        </member>
+        <member name="F:Kinetic.ToImageConfig.y">
+            <summary>
+            Optional. Y position of canvas section.
+            </summary>
+        </member>
+        <member name="F:Kinetic.ToImageConfig.width">
+            <summary>
+            Optional. Width of canvas section.
+            </summary>
+        </member>
+        <member name="F:Kinetic.ToImageConfig.height">
+            <summary>
+            Optional. Height of canvas section.
+            </summary>
+        </member>
+        <member name="F:Kinetic.ToImageConfig.quality">
+            <summary>
+            Optional. Jpeg quality. If using an "image/jpeg" mimeType, you can specify the quality from 0 to 1, where 0 is very poor quality and 1 is very high quality
+            </summary>
+        </member>
+    </members>
+</doc>

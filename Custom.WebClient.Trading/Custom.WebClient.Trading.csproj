@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{02970993-3467-4293-8430-903F5774BFD2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Custom</RootNamespace>
+    <AssemblyName>trading</AssemblyName>
+    <ScriptTemplate>Properties\Script.template</ScriptTemplate>
+    <CodeAnalysisRuleSet>Properties\FxCop.ruleset</CodeAnalysisRuleSet>
+    <GenerateScript>True</GenerateScript>
+    <GenerateResources>True</GenerateResources>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DeploymentPath>..\Custom.WebApi\Scripts\</DeploymentPath>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;CODE_ANALYSIS;SCRIPTSHARP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0028, 1591, 1684</NoWarn>
+    <DocumentationFile>bin\Debug\trading.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DeploymentPath>..\Custom.WebApi\Scripts\</DeploymentPath>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;SCRIPTSHARP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0028, 1591, 1684</NoWarn>
+    <DocumentationFile>bin\Release\trading.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="StradeStation.cs" />
+    <Compile Include="Symbol.cs" />
+    <None Include="packages.config" />
+    <None Include="Properties\FxCop.ruleset" />
+    <None Include="Properties\Script.template" />
+    <Compile Include="Candlestick.cs" />
+    <Compile Include="CandlestickChart.cs" />
+    <Compile Include="DayQuote.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Script.jQuery">
+      <HintPath>..\packages\ScriptSharp.Lib.jQuery.0.7.5.0\lib\Script.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="Script.Web">
+      <HintPath>..\packages\ScriptSharp.Lib.HTML.0.7.5.0\lib\Script.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Angular\Angular.csproj">
+      <Project>{81d9bce1-233a-4c44-8def-c66df0c129e0}</Project>
+      <Name>Angular</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Custom.WebClient.Base\Custom.WebClient.Base.csproj">
+      <Project>{6f719be8-9856-40f5-86d4-d946d097ea25}</Project>
+      <Name>Custom.WebClient.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Custom.WebClient.Core\Custom.WebClient.Core.csproj">
+      <Project>{944a89ee-4564-4292-94ad-8d8245ff4060}</Project>
+      <Name>Custom.WebClient.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Custom.WebClient.Draw\Custom.WebClient.Draw.csproj">
+      <Project>{0524509f-ee93-4f3e-b090-eecdf7adacaa}</Project>
+      <Name>Custom.WebClient.Draw</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\jQuery.Mobile\jQuery.Mobile.csproj">
+      <Project>{9e450112-65af-4972-9978-593fe1145278}</Project>
+      <Name>jQuery.Mobile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\jQuery\jQuery.csproj">
+      <Project>{ac7658bf-02c6-459f-b919-0388af3220e3}</Project>
+      <Name>jQuery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kinetic\Kinetic.csproj">
+      <Project>{34d089b5-03ae-4838-8f90-603637a8eb78}</Project>
+      <Name>Kinetic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OAuth\OAuth.csproj">
+      <Project>{b64ee24b-c6c9-4e17-842d-9319984ebac1}</Project>
+      <Name>OAuth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SignalR\SignalR.csproj">
+      <Project>{2f4b0aac-4b6a-4d96-921e-a754a5825bba}</Project>
+      <Name>SignalR</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\mscorlib.debug.js" />
+    <Content Include="Scripts\mscorlib.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\ScriptSharp.0.7.5.1\tools\ScriptSharp.targets" Condition="Exists('..\packages\ScriptSharp.0.7.5.1\tools\ScriptSharp.targets')" />
+</Project>

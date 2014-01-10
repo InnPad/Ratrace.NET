@@ -1,0 +1,94 @@
+.container
+{
+    top: 40px;
+    left: 40px;
+    width: 640px;
+    height: 640px;
+    position: absolute;
+    display: block;
+}
+
+.main
+{
+    position: relative;
+    height: 640px;
+    display: block;
+    margin: 120px auto;
+    padding: 0;
+    width: 640px;
+}
+
+canvas.container
+{
+    z-index: -1;
+}
+
+div.container
+{
+    z-index: 9999;
+}
+
+div.content
+{
+    /*border-style: solid;
+    border-color: #0000ff;
+    border-width: 3px;*/
+    display: block;
+    position: absolute;
+    /*overflow: hidden;
+    text-indent: -999999px;*/
+    background-repeat: no-repeat;
+    /*background-image: url(img.png);*/
+}
+
+div.content img
+{
+    position: relative;
+}
+
+.notext
+{
+    overflow: hidden;
+    text-indent: -999999px;
+}
+
+#button
+{
+    width: 60px;
+    height: 20px;
+    border-color: #555;
+    border-width: 1px;
+    background-color: #d4d4d4;
+}
+
+.table
+{
+    float: none;
+    display: block;
+}
+
+.row
+{
+    position: relative;
+    float: none;
+    display: block;
+    clear: both;
+}
+
+.cell
+{
+    width: 160px;
+    float: left;
+    display: block;
+}
+
+.cell span
+{
+    font-style: normal;
+    font-size: 12px;
+}
+
+.large
+{
+    width: 640px;
+}

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\aspnet-Custom-20130213125013.mdf;Initial Catalog=aspnet-Custom-20130213125013;Integrated Security=True;User Instance=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Ratraze\\Custom\\Custom\.WebApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="ReflectionModelContainer-Web.config Connection String" description="ReflectionModelContainer Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Reflection.ReflectionModel.csdl|res://*/Reflection.ReflectionModel.ssdl|res://*/Reflection.ReflectionModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=mssql08.sys10.hostasp.net;initial catalog=aces;persist security info=True;user id=custom;password=Kadabra_2013!;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Ratraze\\Custom\\Custom\.WebApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ReflectionModelContainer']/@connectionString" />
+  </parameter>
+  <parameter name="SocialModelContainer-Web.config Connection String" description="SocialModelContainer Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Social.SocialModel.csdl|res://*/Social.SocialModel.ssdl|res://*/Social.SocialModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=mssql08.sys10.hostasp.net;initial catalog=aces;persist security info=True;user id=custom;password=Kadabra_2013!;multipleactiveresultsets=True;application name=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Ratraze\\Custom\\Custom\.WebApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SocialModelContainer']/@connectionString" />
+  </parameter>
+  <parameter name="Custom.Containers.SocialDbContext-Web.config Connection String" description="Custom.Containers.SocialDbContext Connection String used in web.config by the application to access the database." defaultValue="Custom.Containers.SocialDbContext_ConnectionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Ratraze\\Custom\\Custom\.WebApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Custom.Containers.SocialDbContext']/@connectionString" />
+  </parameter>
+  <parameter name="Custom.Trading.TradingModelContainer-Web.config Connection String" description="Custom.Trading.TradingModelContainer Connection String used in web.config by the application to access the database." defaultValue="Custom.Trading.TradingModelContainer_ConnectionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Ratraze\\Custom\\Custom\.WebApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Custom.Trading.TradingModelContainer']/@connectionString" />
+  </parameter>
+</parameters>

@@ -1,0 +1,110 @@
+﻿.easeaccess {
+    font-size: 125%;
+}
+
+.ui-header .ui-controlgroup-horizontal .ui-controlgroup-controls {
+    display: table;
+    margin: 0 auto;
+}
+
+.credits ul.ui-listview li.ui-li p {
+    white-space: normal;
+}
+
+.credits ul.ui-listview li.ui-li img {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    width: 80px;
+    height: 80px;
+    margin-top: -40px; /* Half the height */
+}
+
+.ui-content {
+    position: relative;
+}
+
+.wave-height {
+    overflow-y: hidden;
+}
+
+.wave-width {
+    overflow-x: hidden;
+}
+
+.scrollviewer {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+.h-scrollviewer {
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+}
+
+.v-scrollviewer {
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+    .scrollviewer > *, .h-scrollviewer > *, .v-scrollviewer > *,
+    .ui-content .scrollviewer > .ui-listview,
+    .ui-content .h-scrollviewer > .ui-listview,
+    .ui-content .v-scrollviewer > .ui-listview,
+    .ui-content .scrollviewer > .ui-listview-inset,
+    .ui-content .h-scrollviewer > .ui-listview-inset,
+    .ui-content .v-scrollviewer > .ui-listview-inset {
+        margin: 0;
+    }
+
+
+@media all {
+
+    .ui-content.wave-height {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .ui-content.wave-width {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.floating-content {
+    top: 0;
+    left: 0;
+    width: 34%;
+    padding: 10px;
+    position: absolute;
+    display: block;
+    overflow: hidden;
+    z-index: 9999;
+    transition: left .25s ease;
+    -webkit-transition: left .25s ease;
+    -moz-transition: left .25s ease;
+}
+
+    .floating-content.hidden {
+        left: -40%;
+    }
+
+.floating-content .ui-field-contain {
+    margin: 0;
+    padding: 0;
+}
+
+.scrollviewer .ui-listview-filter, .h-scrollviewer .ui-listview-filter, .v-scrollviewer .ui-listview-filter {
+    margin: 10px;
+}
+
+.scrollviewer .ui-listview-filter-inset, .h-scrollviewer .ui-listview-filter-inset, .v-scrollviewer .ui-listview-filter-inset {
+    margin: 10px;
+}

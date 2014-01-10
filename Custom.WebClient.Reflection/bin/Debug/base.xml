@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>base</name>
+    </assembly>
+    <members>
+        <member name="F:Custom.Vector.X">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+        <member name="F:Custom.Vector.Y">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+        <member name="F:Custom.Vector.Z">
+            <summary>
+            Optional.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0ec0b70785c149df96b961f1c8714f35" Name="Diagram1" >
+        <EntityTypeShape EntityType="SocialModel.Message" Width="1.5" PointX="3.125" PointY="3.5" />
+        <EntityTypeShape EntityType="SocialModel.Identity" Width="1.5" PointX="3.125" PointY="1.25" />
+        <EntityTypeShape EntityType="SocialModel.Contact" Width="1.5" PointX="8.25" PointY="1.5" />
+        <EntityTypeShape EntityType="SocialModel.Circle" Width="1.5" PointX="8.25" PointY="5.375" />
+        <EntityTypeShape EntityType="SocialModel.Exchange" Width="1.5" PointX="5.625" PointY="2.125" />
+        <EntityTypeShape EntityType="SocialModel.Broadcast" Width="1.5" PointX="5.625" PointY="4.75" />
+        <AssociationConnector Association="SocialModel.IdentityContact" />
+        <AssociationConnector Association="SocialModel.IdentityMessage" />
+        <EntityTypeShape EntityType="SocialModel.Session" Width="1.5" PointX="0.75" PointY="1.25" />
+        <AssociationConnector Association="SocialModel.IdentitySession" />
+        <AssociationConnector Association="SocialModel.CircleContact" />
+        <AssociationConnector Association="SocialModel.CircleBroadcast" />
+        <AssociationConnector Association="SocialModel.MessageExchange" />
+        <AssociationConnector Association="SocialModel.MessageBroadcast" />
+        <AssociationConnector Association="SocialModel.ContactExchange" />
+        <AssociationConnector Association="SocialModel.ContactExchange1" />
+        <AssociationConnector Association="SocialModel.ContactBroadcast" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

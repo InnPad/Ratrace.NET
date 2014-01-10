@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ReflectionModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="ReflectionModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Terms" EntityType="ReflectionModel.Term" />
+    <EntitySet Name="Domains" EntityType="ReflectionModel.Domain" />
+    <EntitySet Name="Areas" EntityType="ReflectionModel.Area" />
+    <EntitySet Name="Members" EntityType="ReflectionModel.Member" />
+    <AssociationSet Name="TermArea" Association="ReflectionModel.TermArea">
+      <End Role="Term" EntitySet="Terms" />
+      <End Role="Area" EntitySet="Areas" />
+    </AssociationSet>
+    <AssociationSet Name="TermDomain" Association="ReflectionModel.TermDomain">
+      <End Role="Term" EntitySet="Terms" />
+      <End Role="Domain" EntitySet="Domains" />
+    </AssociationSet>
+    <AssociationSet Name="TermMember" Association="ReflectionModel.TermMember">
+      <End Role="Term" EntitySet="Terms" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="AreaHierarchy" Association="ReflectionModel.AreaHierarchy">
+      <End Role="DependentArea" EntitySet="Areas" />
+      <End Role="PrincipalArea" EntitySet="Areas" />
+    </AssociationSet>
+    <AssociationSet Name="TermHierarchy" Association="ReflectionModel.TermHierarchy">
+      <End Role="DependentTerm" EntitySet="Terms" />
+      <End Role="PrincipalTerm" EntitySet="Terms" />
+    </AssociationSet>
+    <AssociationSet Name="AreaDomain" Association="ReflectionModel.AreaDomain">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="Domain" EntitySet="Domains" />
+    </AssociationSet>
+    <AssociationSet Name="DomainMember" Association="ReflectionModel.DomainMember">
+      <End Role="Domain" EntitySet="Domains" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Term">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Culture" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Sentence" Nullable="false" />
+    <NavigationProperty Name="Dependencies" Relationship="ReflectionModel.TermHierarchy" FromRole="DependentTerm" ToRole="PrincipalTerm" />
+    <NavigationProperty Name="Principal" Relationship="ReflectionModel.TermHierarchy" FromRole="PrincipalTerm" ToRole="DependentTerm" />
+  </EntityType>
+  <EntityType Name="Domain">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Term" Relationship="ReflectionModel.TermDomain" FromRole="Domain" ToRole="Term" />
+    <NavigationProperty Name="Area" Relationship="ReflectionModel.AreaDomain" FromRole="Domain" ToRole="Area" />
+    <NavigationProperty Name="Members" Relationship="ReflectionModel.DomainMember" FromRole="Domain" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Term" Relationship="ReflectionModel.TermArea" FromRole="Area" ToRole="Term" />
+    <NavigationProperty Name="Dependencies" Relationship="ReflectionModel.AreaHierarchy" FromRole="DependentArea" ToRole="PrincipalArea" />
+    <NavigationProperty Name="Principal" Relationship="ReflectionModel.AreaHierarchy" FromRole="PrincipalArea" ToRole="DependentArea" />
+    <NavigationProperty Name="Domains" Relationship="ReflectionModel.AreaDomain" FromRole="Area" ToRole="Domain" />
+  </EntityType>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Term" Relationship="ReflectionModel.TermMember" FromRole="Member" ToRole="Term" />
+    <NavigationProperty Name="Domain" Relationship="ReflectionModel.DomainMember" FromRole="Member" ToRole="Domain" />
+  </EntityType>
+  <Association Name="TermArea">
+    <End Type="ReflectionModel.Term" Role="Term" Multiplicity="1" />
+    <End Type="ReflectionModel.Area" Role="Area" Multiplicity="*" />
+  </Association>
+  <Association Name="TermDomain">
+    <End Type="ReflectionModel.Term" Role="Term" Multiplicity="1" />
+    <End Type="ReflectionModel.Domain" Role="Domain" Multiplicity="*" />
+  </Association>
+  <Association Name="TermMember">
+    <End Type="ReflectionModel.Term" Role="Term" Multiplicity="1" />
+    <End Type="ReflectionModel.Member" Role="Member" Multiplicity="*" />
+  </Association>
+  <Association Name="AreaHierarchy">
+    <End Type="ReflectionModel.Area" Role="DependentArea" Multiplicity="0..1" />
+    <End Type="ReflectionModel.Area" Role="PrincipalArea" Multiplicity="*" />
+  </Association>
+  <Association Name="TermHierarchy">
+    <End Type="ReflectionModel.Term" Role="DependentTerm" Multiplicity="0..1" />
+    <End Type="ReflectionModel.Term" Role="PrincipalTerm" Multiplicity="*" />
+  </Association>
+  <Association Name="AreaDomain">
+    <End Type="ReflectionModel.Area" Role="Area" Multiplicity="1" />
+    <End Type="ReflectionModel.Domain" Role="Domain" Multiplicity="*" />
+  </Association>
+  <Association Name="DomainMember">
+    <End Type="ReflectionModel.Domain" Role="Domain" Multiplicity="1" />
+    <End Type="ReflectionModel.Member" Role="Member" Multiplicity="*" />
+  </Association>
+</Schema>

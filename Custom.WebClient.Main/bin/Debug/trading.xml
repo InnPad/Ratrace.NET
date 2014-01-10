@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>trading</name>
+    </assembly>
+    <members>
+        <member name="T:Custom.Candlestick">
+            <summary>
+            Candlestick. A charting method, originally from Japan, in which the high and low are plotted as a single line and are referred to as shadows. The price range between the open and the close is plotted as a narrow rectangle and is referred to as the body. If the close is above the open, the body is white. If the close is below the open, the body is black. 
+            </summary>
+        </member>
+        <member name="M:Custom.Candlestick.Count(System.Number)">
+            <summary>
+            width 'less or equal than' (n * BlockWidth +  (n - 1) * MarginWidth)
+            </summary>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Custom.CandlestickChart._foreground">
+            <summary>
+            Foreground layer
+            </summary>
+        </member>
+        <member name="F:Custom.CandlestickChart._highlight">
+            <summary>
+            Highlight background for the area in the range.
+            </summary>
+        </member>
+        <member name="F:Custom.CandlestickChart._leftBound">
+            <summary>
+            Lower bound line delimiting the highlight (to the left)
+            </summary>
+        </member>
+        <member name="F:Custom.CandlestickChart._rightBound">
+            <summary>
+            Higher bound line delimiting the highlight (to the right)
+            </summary>
+        </member>
+        <member name="F:Custom.CandlestickChartOptions.day">
+            <summary>
+            The starting day. The date closer to today.
+            </summary>
+        </member>
+        <member name="F:Custom.CandlestickChartOptions.count">
+            <summary>
+            The number of days counting to the past.
+            </summary>
+        </member>
+    </members>
+</doc>

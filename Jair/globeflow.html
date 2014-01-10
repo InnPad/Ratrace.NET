@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>Globe Flow</title>
+    <link rel="stylesheet" href="globeflow.css" type="text/css" media="screen" />
+    <!--[if lt IE 9]>
+        <script src="excanvas/excanvas.js"></script>
+    <![endif]-->
+    <script src="imaging.js" type="text/javascript"></script>
+    <script src="globeflow.js" type="text/javascript"></script>
+    <script src="jquery-1.4.4.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="jquery.tmpl.js"></script>
+    <!--<script src="http://jsapi.netflix.com/us/api/js/api.js" type="text/javascript"></script>-->
+    <script src="globeflow.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var netflixQuery = "http://odata.netflix.com/Catalog/Titles?$filter=Type eq 'Movie' and ReleaseYear gt 2010 and AverageRating gt 2&$format=json";
+        var pageSize = 24;
+        var movies = new Array();
+        var pageSkip = 0;
+
+        function callback(response) {
+            var results = null;
+            if (response != null && response.d != null) {
+                if (response.d.results != null && response.d.results.length > 0) {
+                    results = response.d.results;
+                }
+                else if (response.d.length > 0) {
+                    results = response.d;
+                }
+            }
+
+            if (results != null) {
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].BoxArt.LargeUrl != 'http://cdn-8.nflximg.com/en_US/boxshots/large/70122338.jpg') {
+                        movies[movies.length] = results[i];
+                    }
+                }
+                pageSkip = pageSkip + pageSize;
+                if (results.length == pageSize) {
+                    search();
+                }
+            }
+
+        }
+
+        function search() {
+            // Build OData query
+            var query = netflixQuery + "&$top=" + pageSize.toString() + "&$skip=" + pageSkip.toString();
+
+            // Make JSONP call to Netflix
+
+            try {
+                $.getJSON(query, callback);
+            }
+            catch (err) {
+                $.ajax({
+                    dataType: "jsonp",
+                    url: query,
+                    jsonpCallback: "callback",
+                    success: callback
+                });
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        var t = 0; // time in ms
+        var fps = 20; // frames per second
+        var timeInterval = 1000 / fps; // in ms
+        var canvas = null; // canvas DOM object
+        var canvasContext = null; // canvas context
+        var button = null;
+
+        var rotateVelocity = 50; // pixels / second
+        var rotateDistEachFrame = rotateVelocity * timeInterval / 1000; // ms
+
+        var globe = null;
+        var globeFlow = null;
+        var center = new Vector(320, 320, 0);
+        var rotate = true;
+
+        function init() {
+            canvas = document.getElementById("myCanvas");
+            canvasContext = canvas.getContext("2d");
+            initStageObjects();
+            drawStageObjects();
+            setInterval(updateStage, timeInterval);
+
+            jQuery("#button").click(function () {
+                rotate = !rotate;
+            });
+
+            search();
+        }
+
+        function updateStage() {
+            t += timeInterval;
+            clearCanvas();
+            updateStageObjects();
+            drawStageObjects();
+        }
+
+        function initStageObjects() {
+            globe = new Globik();
+            //globe.rotate(pi / 4, pi / 4, pi / 4);
+            globeFlow = new GlobeFlow(globe, jQuery("div.container").get(0), center, 300);
+            globeFlow.init();
+        }
+
+        function drawStageObjects() {
+            Circle.drawCircleDeprecated(canvasContext, center, 158.5, '#000');
+            canvasContext.fillStyle = '#000';
+            canvasContext.fill();
+
+            globe.paint(canvasContext, center, 160, 30);
+            globeFlow.refresh();
+            globeFlow.update(canvasContext);
+        }
+
+        function updateStageObjects() {
+            var ran = (Math.random() - 0.5) / 64;
+            var axis = new Vector(
+            (globe.VectorX.Y != NaN ? globe.VectorX.X / 64 : 0),
+            (globe.VectorY.Y != NaN ? globe.VectorY.Y / 32 : 0),
+            pi / 256/*(sphere.VectorZ.Z != NaN ? sphere.VectorZ.Z / 64 : ran)*/);
+            //axis.normalize();
+            if (rotate) {
+                globe.rotate(axis.X, axis.Y, axis.Z);
+            }
+        }
+
+        function clearCanvas() {
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</head>
+<body onload="init()">
+    <div class="main">
+        <canvas id="myCanvas" class="container" width="640" height="640">
+        </canvas>
+        <div class="container">
+        </div>
+    </div>
+    <div id="button">
+        <span>rotate</span></div>
+    <div id="dump" class="table">
+    </div>
+</body>
+</html>

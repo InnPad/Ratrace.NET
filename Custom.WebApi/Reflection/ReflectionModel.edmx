@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ReflectionModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ReflectionModelStoreContainer">
+    <EntitySet Name="Terms" EntityType="ReflectionModel.Store.Terms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Domains" EntityType="ReflectionModel.Store.Domains" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Areas" EntityType="ReflectionModel.Store.Areas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Members" EntityType="ReflectionModel.Store.Members" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="TermArea" Association="ReflectionModel.Store.TermArea">
+      <End Role="Term" EntitySet="Terms" />
+      <End Role="Area" EntitySet="Areas" />
+    </AssociationSet>
+    <AssociationSet Name="TermDomain" Association="ReflectionModel.Store.TermDomain">
+      <End Role="Term" EntitySet="Terms" />
+      <End Role="Domain" EntitySet="Domains" />
+    </AssociationSet>
+    <AssociationSet Name="TermMember" Association="ReflectionModel.Store.TermMember">
+      <End Role="Term" EntitySet="Terms" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="AreaHierarchy" Association="ReflectionModel.Store.AreaHierarchy">
+      <End Role="DependentArea" EntitySet="Areas" />
+      <End Role="PrincipalArea" EntitySet="Areas" />
+    </AssociationSet>
+    <AssociationSet Name="TermHierarchy" Association="ReflectionModel.Store.TermHierarchy">
+      <End Role="DependentTerm" EntitySet="Terms" />
+      <End Role="PrincipalTerm" EntitySet="Terms" />
+    </AssociationSet>
+    <AssociationSet Name="AreaDomain" Association="ReflectionModel.Store.AreaDomain">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="Domain" EntitySet="Domains" />
+    </AssociationSet>
+    <AssociationSet Name="DomainMember" Association="ReflectionModel.Store.DomainMember">
+      <End Role="Domain" EntitySet="Domains" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Terms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Culture" Type="varchar" Nullable="false" MaxLength="16" />
+    <Property Name="Sentence" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Principal_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Domains">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Term_Id" Type="int" Nullable="false" />
+    <Property Name="Area_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Areas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Term_Id" Type="int" Nullable="false" />
+    <Property Name="Principal_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Members">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Term_Id" Type="int" Nullable="false" />
+    <Property Name="Domain_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="TermArea">
+    <End Role="Term" Type="ReflectionModel.Store.Terms" Multiplicity="1" />
+    <End Role="Area" Type="ReflectionModel.Store.Areas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Term">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Area">
+        <PropertyRef Name="Term_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TermDomain">
+    <End Role="Term" Type="ReflectionModel.Store.Terms" Multiplicity="1" />
+    <End Role="Domain" Type="ReflectionModel.Store.Domains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Term">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Domain">
+        <PropertyRef Name="Term_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TermMember">
+    <End Role="Term" Type="ReflectionModel.Store.Terms" Multiplicity="1" />
+    <End Role="Member" Type="ReflectionModel.Store.Members" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Term">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Member">
+        <PropertyRef Name="Term_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AreaHierarchy">
+    <End Role="DependentArea" Type="ReflectionModel.Store.Areas" Multiplicity="0..1" />
+    <End Role="PrincipalArea" Type="ReflectionModel.Store.Areas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DependentArea">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PrincipalArea">
+        <PropertyRef Name="Principal_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TermHierarchy">
+    <End Role="DependentTerm" Type="ReflectionModel.Store.Terms" Multiplicity="0..1" />
+    <End Role="PrincipalTerm" Type="ReflectionModel.Store.Terms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DependentTerm">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PrincipalTerm">
+        <PropertyRef Name="Principal_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AreaDomain">
+    <End Role="Area" Type="ReflectionModel.Store.Areas" Multiplicity="1" />
+    <End Role="Domain" Type="ReflectionModel.Store.Domains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Domain">
+        <PropertyRef Name="Area_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DomainMember">
+    <End Role="Domain" Type="ReflectionModel.Store.Domains" Multiplicity="1" />
+    <End Role="Member" Type="ReflectionModel.Store.Members" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Domain">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Member">
+        <PropertyRef Name="Domain_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ReflectionModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ReflectionModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Terms" EntityType="ReflectionModel.Term" />
+          <EntitySet Name="Domains" EntityType="ReflectionModel.Domain" />
+          <EntitySet Name="Areas" EntityType="ReflectionModel.Area" />
+          <EntitySet Name="Members" EntityType="ReflectionModel.Member" />
+          <AssociationSet Name="TermArea" Association="ReflectionModel.TermArea">
+            <End Role="Term" EntitySet="Terms" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="TermDomain" Association="ReflectionModel.TermDomain">
+            <End Role="Term" EntitySet="Terms" />
+            <End Role="Domain" EntitySet="Domains" />
+          </AssociationSet>
+          <AssociationSet Name="TermMember" Association="ReflectionModel.TermMember">
+            <End Role="Term" EntitySet="Terms" />
+            <End Role="Member" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="AreaHierarchy" Association="ReflectionModel.AreaHierarchy">
+            <End Role="DependentArea" EntitySet="Areas" />
+            <End Role="PrincipalArea" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="TermHierarchy" Association="ReflectionModel.TermHierarchy">
+            <End Role="DependentTerm" EntitySet="Terms" />
+            <End Role="PrincipalTerm" EntitySet="Terms" />
+          </AssociationSet>
+          <AssociationSet Name="AreaDomain" Association="ReflectionModel.AreaDomain">
+            <End Role="Area" EntitySet="Areas" />
+            <End Role="Domain" EntitySet="Domains" />
+          </AssociationSet>
+          <AssociationSet Name="DomainMember" Association="ReflectionModel.DomainMember">
+            <End Role="Domain" EntitySet="Domains" />
+            <End Role="Member" EntitySet="Members" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Term">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Culture" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Sentence" Nullable="false" />
+          <NavigationProperty Name="Dependencies" Relationship="ReflectionModel.TermHierarchy" FromRole="DependentTerm" ToRole="PrincipalTerm" />
+          <NavigationProperty Name="Principal" Relationship="ReflectionModel.TermHierarchy" FromRole="PrincipalTerm" ToRole="DependentTerm" />
+          </EntityType>
+        <EntityType Name="Domain">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Term" Relationship="ReflectionModel.TermDomain" FromRole="Domain" ToRole="Term" />
+          <NavigationProperty Name="Area" Relationship="ReflectionModel.AreaDomain" FromRole="Domain" ToRole="Area" />
+          <NavigationProperty Name="Members" Relationship="ReflectionModel.DomainMember" FromRole="Domain" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Term" Relationship="ReflectionModel.TermArea" FromRole="Area" ToRole="Term" />
+          <NavigationProperty Name="Dependencies" Relationship="ReflectionModel.AreaHierarchy" FromRole="DependentArea" ToRole="PrincipalArea" />
+          <NavigationProperty Name="Principal" Relationship="ReflectionModel.AreaHierarchy" FromRole="PrincipalArea" ToRole="DependentArea" />
+          <NavigationProperty Name="Domains" Relationship="ReflectionModel.AreaDomain" FromRole="Area" ToRole="Domain" />
+          </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Term" Relationship="ReflectionModel.TermMember" FromRole="Member" ToRole="Term" />
+          <NavigationProperty Name="Domain" Relationship="ReflectionModel.DomainMember" FromRole="Member" ToRole="Domain" />
+        </EntityType>
+        <Association Name="TermArea">
+          <End Type="ReflectionModel.Term" Role="Term" Multiplicity="1" />
+          <End Type="ReflectionModel.Area" Role="Area" Multiplicity="*" />
+        </Association>
+        <Association Name="TermDomain">
+          <End Type="ReflectionModel.Term" Role="Term" Multiplicity="1" />
+          <End Type="ReflectionModel.Domain" Role="Domain" Multiplicity="*" />
+        </Association>
+        <Association Name="TermMember">
+          <End Type="ReflectionModel.Term" Role="Term" Multiplicity="1" />
+          <End Type="ReflectionModel.Member" Role="Member" Multiplicity="*" />
+        </Association>
+        <Association Name="AreaHierarchy">
+          <End Type="ReflectionModel.Area" Role="DependentArea" Multiplicity="0..1" />
+          <End Type="ReflectionModel.Area" Role="PrincipalArea" Multiplicity="*" />
+        </Association>
+        <Association Name="TermHierarchy">
+          <End Type="ReflectionModel.Term" Role="DependentTerm" Multiplicity="0..1" />
+          <End Type="ReflectionModel.Term" Role="PrincipalTerm" Multiplicity="*" />
+        </Association>
+        <Association Name="AreaDomain">
+          <End Type="ReflectionModel.Area" Role="Area" Multiplicity="1" />
+          <End Type="ReflectionModel.Domain" Role="Domain" Multiplicity="*" />
+        </Association>
+        <Association Name="DomainMember">
+          <End Type="ReflectionModel.Domain" Role="Domain" Multiplicity="1" />
+          <End Type="ReflectionModel.Member" Role="Member" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ReflectionModelStoreContainer" CdmEntityContainer="ReflectionModelContainer">
+    <EntitySetMapping Name="Terms">
+      <EntityTypeMapping TypeName="IsTypeOf(ReflectionModel.Term)">
+        <MappingFragment StoreEntitySet="Terms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Culture" ColumnName="Culture" />
+          <ScalarProperty Name="Sentence" ColumnName="Sentence" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Domains">
+      <EntityTypeMapping TypeName="IsTypeOf(ReflectionModel.Domain)">
+        <MappingFragment StoreEntitySet="Domains">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="IsTypeOf(ReflectionModel.Area)">
+        <MappingFragment StoreEntitySet="Areas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Members">
+      <EntityTypeMapping TypeName="IsTypeOf(ReflectionModel.Member)">
+        <MappingFragment StoreEntitySet="Members">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TermArea" TypeName="ReflectionModel.TermArea" StoreEntitySet="Areas">
+      <EndProperty Name="Term">
+        <ScalarProperty Name="Id" ColumnName="Term_Id" />
+      </EndProperty>
+      <EndProperty Name="Area">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TermDomain" TypeName="ReflectionModel.TermDomain" StoreEntitySet="Domains">
+      <EndProperty Name="Term">
+        <ScalarProperty Name="Id" ColumnName="Term_Id" />
+      </EndProperty>
+      <EndProperty Name="Domain">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TermMember" TypeName="ReflectionModel.TermMember" StoreEntitySet="Members">
+      <EndProperty Name="Term">
+        <ScalarProperty Name="Id" ColumnName="Term_Id" />
+      </EndProperty>
+      <EndProperty Name="Member">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AreaHierarchy" TypeName="ReflectionModel.AreaHierarchy" StoreEntitySet="Areas">
+      <EndProperty Name="DependentArea">
+        <ScalarProperty Name="Id" ColumnName="Principal_Id" />
+      </EndProperty>
+      <EndProperty Name="PrincipalArea">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Principal_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TermHierarchy" TypeName="ReflectionModel.TermHierarchy" StoreEntitySet="Terms">
+      <EndProperty Name="DependentTerm">
+        <ScalarProperty Name="Id" ColumnName="Principal_Id" />
+      </EndProperty>
+      <EndProperty Name="PrincipalTerm">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Principal_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AreaDomain" TypeName="ReflectionModel.AreaDomain" StoreEntitySet="Domains">
+      <EndProperty Name="Area">
+        <ScalarProperty Name="Id" ColumnName="Area_Id" />
+      </EndProperty>
+      <EndProperty Name="Domain">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DomainMember" TypeName="ReflectionModel.DomainMember" StoreEntitySet="Members">
+      <EndProperty Name="Domain">
+        <ScalarProperty Name="Id" ColumnName="Domain_Id" />
+      </EndProperty>
+      <EndProperty Name="Member">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,49 @@
+﻿
+Enable-Migrations
+Add-Migration One -Force
+Update-Database -Force
+
+using (var globalization = new Initializers.GlobalizationInitializer(context))
+            {
+            }
+
+            using (var reflection = new Initializers.ReflectionInitializer(context))
+            {
+            }
+
+http://coding.abel.nu/2012/03/ef-migrations-command-reference/
+
+Enable-Migrations: Enables Code First Migrations in a project.
+Add-Migration: Scaffolds a migration script for any pending model changes.
+Update-Database: Applies any pending migrations to the database.
+Get-Migrations: Displays the migrations that have been applied to the target database.
+
+Enable-Migrations [-EnableAutomaticMigrations] [[-ProjectName] <String>] [-Force] [<CommonParameters>]
+
+Add-Migration [-Name] <String> [-Force]
+  [-ProjectName <String>] [-StartUpProjectName <String>]
+  [-ConfigurationTypeName <String>] [-ConnectionStringName <String>]
+  [-IgnoreChanges] [<CommonParameters>]
+ 
+Add-Migration [-Name] <String> [-Force]
+  [-ProjectName <String>] [-StartUpProjectName <String>]
+  [-ConfigurationTypeName <String>] -ConnectionString <String>
+  -ConnectionProviderName <String> [-IgnoreChanges] [<Common Parameters>]
+
+Update-Database [-SourceMigration <String>]
+  [-TargetMigration <String>] [-Script] [-Force] [-ProjectName <String>]
+  [-StartUpProjectName <String>] [-ConfigurationTypeName <String>]
+  [-ConnectionStringName <String>] [<CommonParameters>]
+ 
+Update-Database [-SourceMigration <String>] [-TargetMigration <String>]
+  [-Script] [-Force] [-ProjectName <String>] [-StartUpProjectName <String>]
+  [-ConfigurationTypeName <String>] -ConnectionString <String>
+  -ConnectionProviderName <String> [<CommonParameters>]
+
+Get-Migrations [-ProjectName <String>] [-StartUpProjectName <String>]
+  [-ConfigurationTypeName <String>] [-ConnectionStringName <String>]
+  [<CommonParameters>]
+ 
+Get-Migrations [-ProjectName <String>] [-StartUpProjectName <String>]
+  [-ConfigurationTypeName <String>] -ConnectionString <String>
+  -ConnectionProviderName <String> [<CommonParameters>]

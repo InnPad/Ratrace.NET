@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>core</name>
+    </assembly>
+    <members>
+        <member name="F:Custom.DateRangeSliderOptions.offset">
+            <summary>
+             The values are given by the number of milliseconds between midnight of January 1, 1970 and the specified date.
+             See Date.getTime and Date.setTime.
+            </summary>
+        </member>
+        <member name="F:Custom.DateRangeSlider.el">
+            <summary>
+            Date range control div element
+            </summary>
+        </member>
+        <member name="F:Custom.DateRangeSlider.trackEl">
+            <summary>
+            Date range track div element
+            </summary>
+        </member>
+        <member name="F:Custom.DateRangeSlider.thumbEl">
+            <summary>
+            Date range thumb div element
+            </summary>
+        </member>
+        <member name="F:Custom.DateRangeSlider.highEl">
+            <summary>
+            Date range high slider input element
+            </summary>
+        </member>
+        <member name="F:Custom.DateRangeSlider.lowEl">
+            <summary>
+            Date range low slider input element
+            </summary>
+            
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:RangeSliderOptions.high" -->
+        <!-- Badly formed XML comment ignored for member "F:RangeSliderOptions.low" -->
+        <!-- Badly formed XML comment ignored for member "F:RangeSliderOptions.max" -->
+        <!-- Badly formed XML comment ignored for member "F:RangeSliderOptions.min" -->
+    </members>
+</doc>

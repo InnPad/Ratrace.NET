@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SocialModelStoreContainer" CdmEntityContainer="SocialModelContainer">
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialModel.Message)">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Identities">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialModel.Identity)">
+        <MappingFragment StoreEntitySet="Identities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialModel.Contact)">
+        <MappingFragment StoreEntitySet="Contacts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Circles">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialModel.Circle)">
+        <MappingFragment StoreEntitySet="Circles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Exchanges">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialModel.Exchange)">
+        <MappingFragment StoreEntitySet="Exchanges">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SentOn" ColumnName="SentOn" />
+          <ScalarProperty Name="SeenOn" ColumnName="SeenOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Broadcasts">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialModel.Broadcast)">
+        <MappingFragment StoreEntitySet="Broadcasts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SentOn" ColumnName="SentOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sessions">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialModel.Session)">
+        <MappingFragment StoreEntitySet="Sessions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Since" ColumnName="Since" />
+          <ScalarProperty Name="Until" ColumnName="Until" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="IdentityContact" TypeName="SocialModel.IdentityContact" StoreEntitySet="Contacts">
+      <EndProperty Name="Identity">
+        <ScalarProperty Name="Id" ColumnName="Identity_Id" />
+      </EndProperty>
+      <EndProperty Name="Contact">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="IdentityMessage" TypeName="SocialModel.IdentityMessage" StoreEntitySet="Messages">
+      <EndProperty Name="Identity">
+        <ScalarProperty Name="Id" ColumnName="Author_Id" />
+      </EndProperty>
+      <EndProperty Name="Message">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="IdentitySession" TypeName="SocialModel.IdentitySession" StoreEntitySet="Sessions">
+      <EndProperty Name="Identity">
+        <ScalarProperty Name="Id" ColumnName="Identity_Id" />
+      </EndProperty>
+      <EndProperty Name="Session">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CircleContact" TypeName="SocialModel.CircleContact" StoreEntitySet="Contacts">
+      <EndProperty Name="Circle">
+        <ScalarProperty Name="Id" ColumnName="Circle_Id" />
+      </EndProperty>
+      <EndProperty Name="Contact">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CircleBroadcast" TypeName="SocialModel.CircleBroadcast" StoreEntitySet="Broadcasts">
+      <EndProperty Name="Circle">
+        <ScalarProperty Name="Id" ColumnName="Circle_Id" />
+      </EndProperty>
+      <EndProperty Name="Broadcast">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MessageExchange" TypeName="SocialModel.MessageExchange" StoreEntitySet="Exchanges">
+      <EndProperty Name="Message">
+        <ScalarProperty Name="Id" ColumnName="Message_Id" />
+      </EndProperty>
+      <EndProperty Name="Exchange">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MessageBroadcast" TypeName="SocialModel.MessageBroadcast" StoreEntitySet="Broadcasts">
+      <EndProperty Name="Message">
+        <ScalarProperty Name="Id" ColumnName="Message_Id" />
+      </EndProperty>
+      <EndProperty Name="Broadcast">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ContactExchange" TypeName="SocialModel.ContactExchange" StoreEntitySet="Exchanges">
+      <EndProperty Name="Contact">
+        <ScalarProperty Name="Id" ColumnName="Recipient_Id" />
+      </EndProperty>
+      <EndProperty Name="Exchange">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ContactExchange1" TypeName="SocialModel.ContactExchange1" StoreEntitySet="Exchanges">
+      <EndProperty Name="Contact">
+        <ScalarProperty Name="Id" ColumnName="Sender_Id" />
+      </EndProperty>
+      <EndProperty Name="Exchange">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ContactBroadcast" TypeName="SocialModel.ContactBroadcast" StoreEntitySet="Broadcasts">
+      <EndProperty Name="Contact">
+        <ScalarProperty Name="Id" ColumnName="Sender_Id" />
+      </EndProperty>
+      <EndProperty Name="Broadcast">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

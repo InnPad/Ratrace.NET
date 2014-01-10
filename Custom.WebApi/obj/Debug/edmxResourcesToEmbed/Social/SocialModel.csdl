@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SocialModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="SocialModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Messages" EntityType="SocialModel.Message" />
+    <EntitySet Name="Identities" EntityType="SocialModel.Identity" />
+    <EntitySet Name="Contacts" EntityType="SocialModel.Contact" />
+    <EntitySet Name="Circles" EntityType="SocialModel.Circle" />
+    <EntitySet Name="Exchanges" EntityType="SocialModel.Exchange" />
+    <EntitySet Name="Broadcasts" EntityType="SocialModel.Broadcast" />
+    <AssociationSet Name="IdentityContact" Association="SocialModel.IdentityContact">
+      <End Role="Identity" EntitySet="Identities" />
+      <End Role="Contact" EntitySet="Contacts" />
+    </AssociationSet>
+    <AssociationSet Name="IdentityMessage" Association="SocialModel.IdentityMessage">
+      <End Role="Identity" EntitySet="Identities" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <EntitySet Name="Sessions" EntityType="SocialModel.Session" />
+    <AssociationSet Name="IdentitySession" Association="SocialModel.IdentitySession">
+      <End Role="Identity" EntitySet="Identities" />
+      <End Role="Session" EntitySet="Sessions" />
+    </AssociationSet>
+    <AssociationSet Name="CircleContact" Association="SocialModel.CircleContact">
+      <End Role="Circle" EntitySet="Circles" />
+      <End Role="Contact" EntitySet="Contacts" />
+    </AssociationSet>
+    <AssociationSet Name="CircleBroadcast" Association="SocialModel.CircleBroadcast">
+      <End Role="Circle" EntitySet="Circles" />
+      <End Role="Broadcast" EntitySet="Broadcasts" />
+    </AssociationSet>
+    <AssociationSet Name="MessageExchange" Association="SocialModel.MessageExchange">
+      <End Role="Message" EntitySet="Messages" />
+      <End Role="Exchange" EntitySet="Exchanges" />
+    </AssociationSet>
+    <AssociationSet Name="MessageBroadcast" Association="SocialModel.MessageBroadcast">
+      <End Role="Message" EntitySet="Messages" />
+      <End Role="Broadcast" EntitySet="Broadcasts" />
+    </AssociationSet>
+    <AssociationSet Name="ContactExchange" Association="SocialModel.ContactExchange">
+      <End Role="Contact" EntitySet="Contacts" />
+      <End Role="Exchange" EntitySet="Exchanges" />
+    </AssociationSet>
+    <AssociationSet Name="ContactExchange1" Association="SocialModel.ContactExchange1">
+      <End Role="Contact" EntitySet="Contacts" />
+      <End Role="Exchange" EntitySet="Exchanges" />
+    </AssociationSet>
+    <AssociationSet Name="ContactBroadcast" Association="SocialModel.ContactBroadcast">
+      <End Role="Contact" EntitySet="Contacts" />
+      <End Role="Broadcast" EntitySet="Broadcasts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Content" Nullable="false" />
+    <NavigationProperty Name="Author" Relationship="SocialModel.IdentityMessage" FromRole="Message" ToRole="Identity" />
+    <NavigationProperty Name="Exchanges" Relationship="SocialModel.MessageExchange" FromRole="Message" ToRole="Exchange" />
+    <NavigationProperty Name="Broadcasts" Relationship="SocialModel.MessageBroadcast" FromRole="Message" ToRole="Broadcast" />
+  </EntityType>
+  <EntityType Name="Identity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Contacts" Relationship="SocialModel.IdentityContact" FromRole="Identity" ToRole="Contact" />
+    <NavigationProperty Name="Messages" Relationship="SocialModel.IdentityMessage" FromRole="Identity" ToRole="Message" />
+    <NavigationProperty Name="Sessions" Relationship="SocialModel.IdentitySession" FromRole="Identity" ToRole="Session" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Identity" Relationship="SocialModel.IdentityContact" FromRole="Contact" ToRole="Identity" />
+    <NavigationProperty Name="Circle" Relationship="SocialModel.CircleContact" FromRole="Contact" ToRole="Circle" />
+    <NavigationProperty Name="Inbox" Relationship="SocialModel.ContactExchange" FromRole="Contact" ToRole="Exchange" />
+    <NavigationProperty Name="Outbox" Relationship="SocialModel.ContactExchange1" FromRole="Contact" ToRole="Exchange" />
+    <NavigationProperty Name="Feeds" Relationship="SocialModel.ContactBroadcast" FromRole="Contact" ToRole="Broadcast" />
+  </EntityType>
+  <EntityType Name="Circle">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Contacts" Relationship="SocialModel.CircleContact" FromRole="Circle" ToRole="Contact" />
+    <NavigationProperty Name="Broadcasts" Relationship="SocialModel.CircleBroadcast" FromRole="Circle" ToRole="Broadcast" />
+  </EntityType>
+  <EntityType Name="Exchange">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Message" Relationship="SocialModel.MessageExchange" FromRole="Exchange" ToRole="Message" />
+    <NavigationProperty Name="Recipient" Relationship="SocialModel.ContactExchange" FromRole="Exchange" ToRole="Contact" />
+    <NavigationProperty Name="Sender" Relationship="SocialModel.ContactExchange1" FromRole="Exchange" ToRole="Contact" />
+    <Property Type="DateTime" Name="SentOn" Nullable="false" />
+    <Property Type="DateTime" Name="SeenOn" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Broadcast">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Circle" Relationship="SocialModel.CircleBroadcast" FromRole="Broadcast" ToRole="Circle" />
+    <NavigationProperty Name="Message" Relationship="SocialModel.MessageBroadcast" FromRole="Broadcast" ToRole="Message" />
+    <NavigationProperty Name="Sender" Relationship="SocialModel.ContactBroadcast" FromRole="Broadcast" ToRole="Contact" />
+    <Property Type="DateTime" Name="SentOn" Nullable="false" />
+  </EntityType>
+  <Association Name="IdentityContact">
+    <End Type="SocialModel.Identity" Role="Identity" Multiplicity="1" />
+    <End Type="SocialModel.Contact" Role="Contact" Multiplicity="*" />
+  </Association>
+  <Association Name="IdentityMessage">
+    <End Type="SocialModel.Identity" Role="Identity" Multiplicity="1" />
+    <End Type="SocialModel.Message" Role="Message" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Session">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Identity" Relationship="SocialModel.IdentitySession" FromRole="Session" ToRole="Identity" />
+    <Property Type="DateTime" Name="Since" Nullable="false" />
+    <Property Type="DateTime" Name="Until" Nullable="true" />
+  </EntityType>
+  <Association Name="IdentitySession">
+    <End Type="SocialModel.Identity" Role="Identity" Multiplicity="1" />
+    <End Type="SocialModel.Session" Role="Session" Multiplicity="*" />
+  </Association>
+  <Association Name="CircleContact">
+    <End Type="SocialModel.Circle" Role="Circle" Multiplicity="1" />
+    <End Type="SocialModel.Contact" Role="Contact" Multiplicity="*" />
+  </Association>
+  <Association Name="CircleBroadcast">
+    <End Type="SocialModel.Circle" Role="Circle" Multiplicity="1" />
+    <End Type="SocialModel.Broadcast" Role="Broadcast" Multiplicity="*" />
+  </Association>
+  <Association Name="MessageExchange">
+    <End Type="SocialModel.Message" Role="Message" Multiplicity="1" />
+    <End Type="SocialModel.Exchange" Role="Exchange" Multiplicity="*" />
+  </Association>
+  <Association Name="MessageBroadcast">
+    <End Type="SocialModel.Message" Role="Message" Multiplicity="1" />
+    <End Type="SocialModel.Broadcast" Role="Broadcast" Multiplicity="*" />
+  </Association>
+  <Association Name="ContactExchange">
+    <End Type="SocialModel.Contact" Role="Contact" Multiplicity="1" />
+    <End Type="SocialModel.Exchange" Role="Exchange" Multiplicity="*" />
+  </Association>
+  <Association Name="ContactExchange1">
+    <End Type="SocialModel.Contact" Role="Contact" Multiplicity="1" />
+    <End Type="SocialModel.Exchange" Role="Exchange" Multiplicity="*" />
+  </Association>
+  <Association Name="ContactBroadcast">
+    <End Type="SocialModel.Contact" Role="Contact" Multiplicity="1" />
+    <End Type="SocialModel.Broadcast" Role="Broadcast" Multiplicity="*" />
+  </Association>
+</Schema>

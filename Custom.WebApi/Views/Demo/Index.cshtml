@@ -1,0 +1,41 @@
+﻿<div id="demo-page" data-role="page" data-theme="a" data-title="Demo - easeaccess" data-ng-controller="demo">
+    <div data-role="header" data-position="fixed" data-theme="a" role="banner">
+        <div data-role="controlgroup" data-theme="a" data-type="horizontal">
+            <a href="/Home" data-icon="home" data-iconpos="left" data-role="button" data-transition="slide" data-direction="reverse">Home</a>
+            <a href="/Demo" data-icon="grid" data-iconpos="left" data-role="button" data-theme="f" data-transition="flip">Demo</a>
+            <a href="/About" data-icon="info" data-iconpos="left" data-role="button" data-transition="slide">About</a>
+        </div>
+        <div data-role="navbar">
+            <ul>
+                @*http://jquerymobile.com/demos/1.2.0/docs/buttons/buttons-icons.html*@
+                <li><a href="javascript:void(0)" ng-click="toggleSearch($event)" data-icon="search" data-iconpos="top">Search</a></li>
+                <li><a href="javascript:void(0)" data-icon="grid" data-iconpos="top">Summary</a></li>
+                <li><a href="javascript:void(0)" data-icon="star" data-iconpos="top">Favs</a></li>
+                <li><a href="javascript:void(0)" data-icon="gear" data-iconpos="top">Control</a></li>
+                <li><a href="javascript:void(0)" data-icon="check" data-iconpos="top">Setup</a></li>
+            </ul>
+        </div>
+        <!-- /navbar -->
+    </div>
+    <div data-role="content" class="wave-height wave-width">
+        <div class="floating-content hidden wave-height dont-wave-width">
+            @*<div>{{ greeting }}</div>
+            <input type="text" data-ng-model="greeting" />*@
+            <div data-role="fieldcontain">
+                <ul class="v-scrollviewer wave-height" data-role="listview" data-inset="true" data-filter="true">
+                    <li ng-repeat="item in symbols"><a href="">
+                        <h3>{{item.name}} <span class="ui-small">({{item.market}}:{{item.id}})</span></h3>
+                        <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">{{item.value}}</span>
+                        <p>{{item.summary}}</p>
+                    </a></li>
+                    @*<li ngm-if="pager1.hasMore">
+                        <a href="#" ngm-vclick="pager.loadMore()">Load more</a>
+                    </li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div data-role="footer" data-position="fixed" data-theme="a" role="banner">
+        @Html.Partial("DateRange")
+    </div>
+</div>

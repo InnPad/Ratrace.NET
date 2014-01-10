@@ -1,0 +1,830 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript">
+        var pi = 3.14159265358979323846;
+    </script>
+    <!--class Point2D-->
+    <script type="text/javascript">
+        // constructor
+        function Point2D(x, y) {
+            this.X = x;
+            this.Y = y;
+
+            // Cross product
+            this.crossProduct = function (point) {
+                return new Point2D(this.X * point.X, this.Y * point.Y);
+            }
+
+            // Dot product
+            this.dotProduct = function (point) {
+                return this.X * point.X + this.Y * point.Y;
+            }
+
+            this.substract = function (point) {
+                return new Point2D(this.X - point.X, this.Y - point.Y);
+            }
+
+            this.translate = function (vector) {
+                return new Vector3D(this.X + vector.X, this.Y + vector.Y, vector.Z);
+            }
+
+            this.image = function () {
+                return new Point2D(-this.X, -this.Y);
+            }
+
+            this.dot = function (ctx, point, color) {
+                point = this.translate(point);
+                ctx.fillStyle = color;
+                ctx.fillRect(point.X - 1, point.Y - 1, 3, 3);
+            }
+
+            this.draw = function (ctx, point, color) {
+                point = this.translate(point);
+                ctx.fillStyle = color;
+                ctx.fillRect(point.X - 60, point.Y - 60, 121, 121);
+            }
+
+            this.drawDeep = function (ctx, point, base, factor, color) {
+                point = this.translate(point);
+                ctx.fillStyle = color;
+                var width = base + point.Z * factor
+                var half = Math.floor(width / 2);
+                ctx.fillRect(point.X - half, point.Y - half, width, width);
+            }
+
+            this.moveTo = function (ctx, point) {
+                point = this.translate(point);
+                ctx.moveTo(point.X, point.Y);
+            }
+
+            this.quadraticCurveTo = function (ctx, control, ending, color) {
+                control = this.translate(control);
+                ending = this.translate(ending);
+                ctx.strokeStyle = color;
+                ctx.quadraticCurveTo(control.X, control.Y, ending.X, ending.Y);
+            }
+        }
+    </script>
+    <!--class Vector3D-->
+    <script type="text/javascript">
+        // constructor
+        function Vector3D(x, y, z) {
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+
+            this.length = function () {
+                return Math.sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z);
+            }
+
+            // Normalize
+            this.normalize = function () {
+                var length = this.length();
+
+                this.X = this.X / length;
+                this.Y = this.Y / length;
+                this.Z = this.Z / length;
+            }
+
+            // Cross product
+            this.crossProduct = function (vector) {
+                return new Vector3D(
+                this.Y * vector.Z - this.Z * vector.Y,
+                this.Z * vector.X - this.X * vector.Z,
+                this.X * vector.Y - this.Y * vector.X);
+            }
+
+            this.image = function () {
+                return new Vector3D(-this.X, -this.Y, -this.Z);
+            }
+
+            this.plot = function (radio) {
+                return new Vector3D(
+                this.X * radio,
+                this.Y * radio,
+                this.Z * radio);
+            }
+
+            // Rotate X
+            this.rotateX = function (cos, sin) {
+                var newY = cos * this.Y - sin * this.Z;
+                var newZ = sin * this.Y + cos * this.Z;
+
+                this.Y = newY;
+                this.Z = newZ;
+
+                this.normalize();
+            }
+
+            // Rotate Y
+            this.rotateY = function (cos, sin) {
+                var newX = cos * this.X + sin * this.Z;
+                var newZ = cos * this.Z - sin * this.X;
+
+                this.X = newX;
+                this.Z = newZ;
+
+                this.normalize();
+            }
+
+            // Rotate Z
+            this.rotateZ = function (cos, sin) {
+                var newX = cos * this.X - sin * this.Y;
+                var newY = sin * this.X + cos * this.Y;
+
+                this.X = newX;
+                this.Y = newY;
+
+                this.normalize();
+            }
+
+            this.to2D = function (radio) {
+                return new Point2D(this.X * radio, this.Y * radio);
+            }
+
+            this.translate = function (v, d) {
+                return new Vector3D(v.X + this.X * d, v.Y + this.Y * d, v.Z + this.Z * d);
+            }
+        }
+    </script>
+    <!--class Circle-->
+    <script type="text/javascript">
+        // constructor
+        // sphere: Sphere;
+        // axis: 'x', 'y', 'z'
+        // quadrant: 0..3;
+        function Circle() {
+        }
+
+        Circle.draw2D = function (ctx, center, radio) {
+
+            var pi4th = pi / 4;
+            var pi8th = pi / 8;
+            var sin_pi4th = Math.sin(pi4th);
+            var tan_pi8th = Math.tan(pi8th);
+
+            var x = center.X;
+            var y = center.Y;
+            var r = radio;
+
+            // Draw shapes
+            ctx.beginPath()
+            // r=circle radius, x,y=offset circle center coordinates within mcClip
+            ctx.moveTo(x + r, y);
+            // start drawing circle CCW at positive x-axis, at distance r from center(x+r)
+            // 1st anchor point...x:(x+r), y:y
+            ctx.quadraticCurveTo(r + x, -tan_pi8th * r + y, sin_pi4th * r + x, -sin_pi4th * r + y);
+            // control point...x:radius+x offset, y:tan(pi/8)*radius+y offset
+            // 2nd anchor point...x:cos(pi/4)*radius+x offset, y:sin(pi/4)*radius+y offset
+            // becomes 1st anchor point for next curveTo
+            ctx.quadraticCurveTo(tan_pi8th * r + x, -r + y, x, -r + y);
+            // control point...x:cot(3pi/8)*radius+x offset, y:-radius+ y offset
+            // 2nd anchor point...x:x offset,y:-radius+y offset
+            // etc...
+            ctx.quadraticCurveTo(-tan_pi8th * r + x, -r + y, -sin_pi4th * r + x, -sin_pi4th * r + y);
+            ctx.quadraticCurveTo(-r + x, -tan_pi8th * r + y, -r + x, y);
+            ctx.quadraticCurveTo(-r + x, tan_pi8th * r + y, -sin_pi4th * r + x, sin_pi4th * r + y);
+            ctx.quadraticCurveTo(-tan_pi8th * r + x, r + y, x, r + y);
+            ctx.quadraticCurveTo(tan_pi8th * r + x, r + y, sin_pi4th * r + x, sin_pi4th * r + y);
+            ctx.quadraticCurveTo(r + x, tan_pi8th * r + y, r + x, y);
+            ctx.stroke();
+        }
+
+        Circle.draw3D = function (ctx, center, radio, vectorU, vectorV, color) {
+            var point0 = new Point2D(vectorU.X * radio, vectorU.Y * radio);
+
+            var angN = Math.atan(-vectorU.Z / vectorV.Z);
+
+            if (vectorV.Z < 0) {
+                angN = angN + pi;
+            }
+
+            if (angN < 0) {
+                angN = 2 * pi + angN;
+            } else if (angN > 2 * pi) {
+                angN = angN - 2 * pi;
+            }
+
+            var nseg = 6;
+            var delta = pi / 64;
+            var segmentAngle = pi / nseg;
+            var contextAngle = angN;
+            var context = Circle.plot3D(angN, radio, vectorU, vectorV);
+            ctx.beginPath();
+            center.moveTo(ctx, context);
+            for (var i = 0; i < nseg; i++) {
+                var endingAngle = contextAngle + segmentAngle;
+                var ending = Circle.plot3D(endingAngle, radio, vectorU, vectorV);
+                var control = Circle.control(context,
+                       Circle.plot3D(contextAngle + delta, radio, vectorU, vectorV),
+                       Circle.plot3D(endingAngle - delta, radio, vectorU, vectorV), ending);
+                center.quadraticCurveTo(ctx, control, ending, color);
+                contextAngle = endingAngle;
+                context = ending;
+            }
+            ctx.stroke();
+
+            //center.draw(ctx, dotN, '#ff0000');
+            //center.draw(ctx, context, '#ff00FF');
+
+            /*if (vectorU.Z > 0) {
+            center.draw(ctx, point0, '#0000ff');
+            center.draw(ctx, point0.image(), '#555555');
+            }
+            else if (vectorU.Z < 0) {
+            center.draw(ctx, point0, '#555555');
+            center.draw(ctx, point0.image(), '#00ff00');
+            }
+            else {
+            }*/
+            return context;
+        }
+
+        // point where lines context-midA and midB-ending intersects
+        Circle.control = function (context, midA, midB, ending) {
+            var xa = (context.X - midA.X);
+            var xb = (midB.X - ending.X);
+            var ya = (context.Y - midA.Y);
+            var yb = (midB.Y - ending.Y);
+
+            var d = xa * yb - ya * xb;
+
+            var a = (context.X * midA.Y - context.Y * midA.X);
+            var b = (midB.X * ending.Y - midB.Y * ending.X);
+
+            return new Point2D((a * xb - xa * b) / d, (a * yb - ya * b) / d);
+        }
+
+        // To get a parametric equation follow this procedure.
+        // 1. Let N be a unit normal vector for the plane.
+        // 2. Let C be the circle center, and let R be the radius.
+        // 3. Let U be a unit vector from C toward a point on the circle.
+        // 4. Let V = N x U.
+        // 5. Let t be the paramter.
+        // 6. A point P is on the circle if...
+        // P = C + R cos(t) U + R sin(t) V
+        Circle.plot3D = function (radians, radio, vectorU, vectorV) {
+            var x = radio * Math.cos(radians);
+            var y = radio * Math.sin(radians);
+
+            var vector = new Vector3D(
+                    x * vectorU.X + y * vectorV.X,
+                    x * vectorU.Y + y * vectorV.Y,
+                    x * vectorU.Z + y * vectorV.Z
+                );
+
+            return vector;
+        }
+
+        Circle.vectorN = function (sphere, axis) {
+            switch (axis) {
+                case 'x':
+                    return sphere.VectorX;
+                case 'y':
+                    return sphere.VectorY;
+                default:
+                    return sphere.VectorZ;
+            }
+        }
+
+        Circle.vectorU = function () {
+            switch (axis) {
+                case 'x':
+                    return sphere.VectorY;
+                case 'y':
+                    return sphere.VectorZ;
+                default:
+                    return sphere.VectorX;
+            }
+        }
+
+        Circle.vectorV = function (vectorN, vectorU) {
+            return vectorV = vectorN.crossProduct(vectorU);
+        }
+    </script>
+    <!--class Sphere-->
+    <script type="text/javascript">
+        // constructor
+        function Sphere(x, y, radio) {
+            this.Center = new Point2D(x, y);
+            this.Radio = radio;
+            this.VectorX = new Vector3D(1, 0, 0);
+            this.VectorY = new Vector3D(0, 1, 0);
+            this.VectorZ = new Vector3D(0, 0, 1);
+            this.Accu = pi / 8;
+            this.Epsilon = pi / 64;
+
+            this.fill = function (ctx) {
+                var rect_angle = pi / 2;
+                // N
+                var xN = this.VectorX;
+                var yN = this.VectorY;
+                var zN = this.VectorZ;
+
+                // U
+                var xU = this.VectorY;
+                var yU = this.VectorZ;
+                var zU = this.VectorX;
+
+                // V
+                var xV = this.VectorZ;
+                var yV = this.VectorX;
+                var zV = this.VectorY;
+
+                var r = this.Radio;
+                var d = 40;
+                var h = Math.sqrt(r * r - d * d);
+                var mhu = Math.asin(d / h);
+
+                var a = new Array(4);
+                var b = new Array(4);
+
+                a[0] = mhu;
+                a[1] = pi / 2 + mhu;
+                a[2] = pi + mhu;
+                a[3] = 3 * pi / 2 + mhu;
+
+                b[0] = pi / 2 - mhu;
+                b[1] = pi - mhu;
+                b[2] = 3 * pi / 2 - mhu;
+                b[3] = 2 * pi - mhu;
+
+                for (var i = 0; i < 4; i++) {
+                    ctx.beginPath();
+                    this.parallel3D(ctx, h, d, a[i], b[i], xN, xU, xV, '#ff0000');
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    this.parallel3D(ctx, h, -d, a[i], b[i], xN, xU, xV, '#ff0000');
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    this.parallel3D(ctx, h, d, a[i], b[i], yN, yU, yV, '#ff0000');
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    this.parallel3D(ctx, h, -d, a[i], b[i], yN, yU, yV, '#ff0000');
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    this.parallel3D(ctx, h, d, a[i], b[i], zN, zU, zV, '#ff0000');
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    this.parallel3D(ctx, h, -d, a[i], b[i], zN, zU, zV, '#ff0000');
+                    ctx.stroke();
+                }
+
+                var xSigma = Math.atan(-xU.Z / xV.Z);
+                var ySigma = Math.atan(-yU.Z / yV.Z);
+                var zSigma = Math.atan(-zU.Z / zV.Z);
+
+                var pppX = 0;
+                var pppY = 0;
+                var pppZ = 0;
+                var ppqX = 0;
+                var ppqY = 0;
+                var ppqZ = 0;
+                var pqpX = 0;
+                var pqpY = 0;
+                var pqpZ = 0;
+                var pqqX = 0;
+                var pqqY = 0;
+                var pqqZ = 0;
+                var qppX = 0;
+                var qppY = 0;
+                var qppZ = 0;
+                var qpqX = 0;
+                var qpqY = 0;
+                var qpqZ = 0;
+                var qqpX = 0;
+                var qqpY = 0;
+                var qqpZ = 0;
+                var qqqX = 0;
+                var qqqY = 0;
+                var qqqZ = 0;
+
+                ctx.stroke();
+                ctx.strokeStyle = '#000000';
+            }
+
+            this.draw = function (ctx) {
+                var arcX0 = new Arc3D(this, 'x', 0);
+                var arcX1 = new Arc3D(this, 'x', 1);
+                var arcX2 = new Arc3D(this, 'x', 2);
+                var arcX3 = new Arc3D(this, 'x', 3);
+
+                var arcY0 = new Arc3D(this, 'y', 0);
+                var arcY1 = new Arc3D(this, 'y', 1);
+                var arcY2 = new Arc3D(this, 'y', 2);
+                var arcY3 = new Arc3D(this, 'y', 3);
+
+                var arcZ0 = new Arc3D(this, 'z', 0);
+                var arcZ1 = new Arc3D(this, 'z', 1);
+                var arcZ2 = new Arc3D(this, 'z', 2);
+                var arcZ3 = new Arc3D(this, 'z', 3);
+
+                ctx.strokeStyle = '#000000';
+
+                Circle.draw2D(ctx, this.Center, this.Radio);
+
+                ctx.stroke();
+
+                // N
+                var xN = this.VectorX;
+                var yN = this.VectorY;
+                var zN = this.VectorZ;
+
+                // U
+                var xU = this.VectorY;
+                var yU = this.VectorZ;
+                var zU = this.VectorX;
+
+                // V
+                var xV = this.VectorZ;
+                var yV = this.VectorX;
+                var zV = this.VectorY;
+
+                // X
+                Circle.draw3D(ctx, this.Center, this.Radio, xU, xV);
+
+                // Y
+                Circle.draw3D(ctx, this.Center, this.Radio, yU, yV);
+
+                // X
+                Circle.draw3D(ctx, this.Center, this.Radio, zU, zV);
+
+                var base = this.Radio / 2;
+                var factor = 1 / 3;
+
+                if (this.VectorX.Z < 0) {
+                    this.Center.drawDeep(ctx, this.VectorX.plot(-this.Radio), base, factor, '#ff00ff');
+                    this.Center.drawDeep(ctx, this.VectorX.plot(this.Radio), base, factor, '#d4d4d4');
+                }
+                else {
+                    this.Center.drawDeep(ctx, this.VectorX.plot(this.Radio), base, factor, '#ff00ff');
+                    this.Center.drawDeep(ctx, this.VectorX.plot(-this.Radio), base, factor, 'd4d4d4');
+                }
+
+                if (this.VectorY.Z < 0) {
+                    this.Center.drawDeep(ctx, this.VectorY.plot(-this.Radio), base, factor, '#ffff00');
+                    this.Center.drawDeep(ctx, this.VectorY.plot(this.Radio), base, factor, '#d4d4d4');
+                }
+                else {
+                    this.Center.drawDeep(ctx, this.VectorY.plot(this.Radio), base, factor, '#ffff00');
+                    this.Center.drawDeep(ctx, this.VectorY.plot(-this.Radio), base, factor, '#d4d4d4');
+                }
+
+                if (this.VectorZ.Z < 0) {
+                    this.Center.drawDeep(ctx, this.VectorZ.plot(-this.Radio), base, factor, '#00ffff');
+                    this.Center.drawDeep(ctx, this.VectorZ.plot(this.Radio), base, factor, 'd4d4d4');
+                }
+                else {
+                    this.Center.drawDeep(ctx, this.VectorZ.plot(this.Radio), base, factor, '#00ffff');
+                    this.Center.drawDeep(ctx, this.VectorZ.plot(-this.Radio), base, factor, '#d4d4d4');
+                }
+
+                var xSigma = Math.atan(-xU.Z / xV.Z);
+                var ySigma = Math.atan(-yU.Z / yV.Z);
+                var zSigma = Math.atan(-zU.Z / zV.Z);
+
+                var x0 = Circle.plot3D(xSigma, radio, xU, xV);
+                var y0 = Circle.plot3D(ySigma, radio, yU, yV);
+                var z0 = Circle.plot3D(zSigma, radio, zU, zV);
+
+                this.Center.drawDeep(ctx, x0, base, factor, '#00ff00');
+                this.Center.drawDeep(ctx, y0, base, factor, '#0000ff');
+                this.Center.drawDeep(ctx, z0, base, factor, '#ff0000');
+
+                this.Center.drawDeep(ctx, x0.image(), base, factor, '#00ff00');
+                this.Center.drawDeep(ctx, y0.image(), base, factor, '#0000ff');
+                this.Center.drawDeep(ctx, z0.image(), base, factor, '#ff0000');
+            }
+
+            this.parallel3D = function (ctx, r, d, a, b, n, u, v, c) {
+
+                var p = n.translate(Circle.plot3D(a, r, u, v), d);
+                var steps = Math.abs(Math.ceil((b - a) / this.Accu));
+
+                if (steps == 0) {
+                    return p;
+                }
+
+                var delta = (b - a) / steps;
+                var phi = a;
+
+                this.Center.moveTo(ctx, p);
+
+                for (var i = 0; i < steps; i++) {
+                    var rho = phi + delta;
+
+                    var ending = n.translate(Circle.plot3D(rho, r, u, v), d);
+
+                    var control = Circle.control(p,
+                       n.translate(Circle.plot3D(phi + this.Epsilon, r, u, v), d),
+                       n.translate(Circle.plot3D(rho - this.Epsilon, r, u, v), d), ending);
+
+                    this.Center.quadraticCurveTo(ctx, control, ending, c);
+
+                    p = ending;
+                    phi = rho;
+                }
+
+                return p;
+            }
+
+            this.arc3D = function (ctx, p, r, a, b, u, v, c) {
+
+                var steps = Math.abs(Math.ceil((b - a) / this.Accu));
+
+                if (steps == 0) {
+                    return p;
+                }
+
+                var delta = (b - a) / steps;
+                var phi = a;
+
+                this.Center.moveTo(ctx, p);
+
+                for (var i = 0; i < steps; i++) {
+                    var rho = phi + delta;
+
+                    var ending = Circle.plot3D(rho, r, u, v);
+
+                    var control = Circle.control(p,
+                       Circle.plot3D(phi + this.Epsilon, r, u, v),
+                       Circle.plot3D(rho - this.Epsilon, r, u, v), ending);
+
+                    this.Center.quadraticCurveTo(ctx, control, ending, c);
+
+                    p = ending;
+                    phi = rho;
+                }
+
+                return p;
+            }
+
+            this.rotate = function (x, y, z) {
+
+                var axis = new Vector3D(x, y, z);
+
+                //axis.normalize();
+
+                if (x != 0) {
+                    var cosX = Math.cos(axis.X);
+                    var sinX = Math.sin(axis.X);
+                    this.VectorX.rotateX(cosX, sinX);
+                    this.VectorY.rotateX(cosX, sinX);
+                    this.VectorZ.rotateX(cosX, sinX);
+                }
+
+                if (y != 0) {
+                    var cosY = Math.cos(axis.Y);
+                    var sinY = Math.sin(axis.Y);
+                    this.VectorX.rotateY(cosY, sinY);
+                    this.VectorY.rotateY(cosY, sinY);
+                    this.VectorZ.rotateY(cosY, sinY);
+                }
+
+                if (z != 0) {
+                    var cosZ = Math.cos(axis.Z);
+                    var sinZ = Math.sin(axis.Z);
+                    this.VectorX.rotateZ(cosZ, sinZ);
+                    this.VectorY.rotateZ(cosZ, sinZ);
+                    this.VectorZ.rotateZ(cosZ, sinZ);
+                }
+            }
+        }
+    </script>
+    <!--class Arc3D-->
+    <script type="text/javascript">
+        // constructor
+        // sphere: Sphere;
+        // axis: 'x', 'y', 'z'
+        // quadrant: 0..3;
+        function Arc3D(sphere, axis, quadrant) {
+            this.Sphere = sphere;
+            this.Axis = axis;
+            this.Quadrant = quadrant;
+
+            this.draw = function (ctx) {
+                var vectorN = this.vectorN();
+                var vectorU = this.vectorU();
+                var vectorV = vectorN.crossProduct(vectorU);
+                var radio = this.Sphere.Radio;
+                var center = this.Sphere.Center;
+
+                var ang0 = 0;
+                var angA = pi / 8;
+                var angB = pi / 4;
+                var angC = 3 * pi / 8;
+                var angD = pi / 2;
+
+                var cut_radians = Math.atan(-vectorU.Z / vectorV.Z);
+                if (cut_radians < 0) {
+                    cut_radians = -cut_radians;
+                }
+                //var dot = Circle.plot3D(cut_radians, radio, vectorU, vectorV)
+                //dot = center.translate(dot);
+                /*imagedata = ctx.getImageData(0, 0, 200, 200)
+                ctx.putImageData(imagedata, dot.X, dot.Y);*/
+
+                //ctx.fillRect(dot.X - 2, dot.Y - 2, 5, 5);
+
+                var context = Circle.plot3D(ang0, radio, vectorU, vectorV);
+                var endingA = Circle.plot3D(angA, radio, vectorU, vectorV);
+                var endingB = Circle.plot3D(angB, radio, vectorU, vectorV);
+                var endingC = Circle.plot3D(angC, radio, vectorU, vectorV);
+                var endingD = Circle.plot3D(angD, radio, vectorU, vectorV);
+                var delta = pi / 64;
+
+                var controlA = this.control(context, Circle.plot3D(ang0 + delta, radio, vectorU, vectorV), Circle.plot3D(angA - delta, radio, vectorU, vectorV), endingA);
+                var controlB = this.control(endingA, Circle.plot3D(angA + delta, radio, vectorU, vectorV), Circle.plot3D(angB - delta, radio, vectorU, vectorV), endingB);
+                var controlC = this.control(endingB, Circle.plot3D(angB + delta, radio, vectorU, vectorV), Circle.plot3D(angC - delta, radio, vectorU, vectorV), endingC);
+                var controlD = this.control(endingC, Circle.plot3D(angC + delta, radio, vectorU, vectorV), Circle.plot3D(angD - delta, radio, vectorU, vectorV), endingD);
+
+                context = center.translate(context);
+                endingA = center.translate(endingA);
+                endingB = center.translate(endingB);
+                endingC = center.translate(endingC);
+                endingD = center.translate(endingD);
+                controlA = center.translate(controlA);
+                controlB = center.translate(controlB);
+                controlC = center.translate(controlC);
+                controlD = center.translate(controlD);
+
+                ctx.moveTo(context.X, context.Y);
+                ctx.quadraticCurveTo(controlA.X, controlA.Y, endingA.X, endingA.Y);
+                ctx.quadraticCurveTo(controlB.X, controlB.Y, endingB.X, endingB.Y);
+                ctx.quadraticCurveTo(controlC.X, controlC.Y, endingC.X, endingC.Y);
+                ctx.quadraticCurveTo(controlD.X, controlD.Y, endingD.X, endingD.Y);
+
+                return endingD;
+            }
+
+            // point where lines context-midA and midB-ending intersects
+            this.control = function (context, midA, midB, ending) {
+                var xa = (context.X - midA.X);
+                var xb = (midB.X - ending.X);
+                var ya = (context.Y - midA.Y);
+                var yb = (midB.Y - ending.Y);
+
+                var d = xa * yb - ya * xb;
+
+                var a = (context.X * midA.Y - context.Y * midA.X);
+                var b = (midB.X * ending.Y - midB.Y * ending.X);
+
+                return new Point2D((a * xb - xa * b) / d, (a * yb - ya * b) / d);
+            }
+
+            // To get a parametric equation follow this procedure.
+            // 1. Let N be a unit normal vector for the plane.
+            // 2. Let C be the circle center, and let R be the radius.
+            // 3. Let U be a unit vector from C toward a point on the circle.
+            // 4. Let V = N x U.
+            // 5. Let t be the paramter.
+            // 6. A point P is on the circle if...
+            // P = C + R cos(t) U + R sin(t) V
+            this.plot = function (radians, radio, vectorU, vectorV) {
+                var x = radio * Math.cos(radians);
+                var y = radio * Math.sin(radians);
+
+                if (this.Quadrant == 1 || this.Quadrant == 2) {
+                    x = -x;
+                }
+
+                if (this.Quadrant == 2 || this.Quadrant == 3) {
+                    y = -y;
+                }
+
+                var vector = new Vector3D(
+                    x * vectorU.X + y * vectorV.X,
+                    x * vectorU.Y + y * vectorV.Y,
+                    x * vectorU.Z + y * vectorV.Z
+                );
+
+                return vector;
+            }
+
+            this.vectorN = function () {
+                switch (this.Axis) {
+                    case 'x':
+                        return this.Sphere.VectorX;
+                    case 'y':
+                        return this.Sphere.VectorY;
+                    default:
+                        return this.Sphere.VectorZ;
+                }
+            }
+
+            this.vectorU = function () {
+                switch (this.Axis) {
+                    case 'x':
+                        return this.Sphere.VectorY;
+                    case 'y':
+                        return this.Sphere.VectorZ;
+                    default:
+                        return this.Sphere.VectorX;
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function drawSphere(x, y, radio) {
+            // get the canvas element using the DOM
+            var canvas = document.getElementById('myCanvas');
+            // Make sure we don't execute when canvas isn't supported
+            if (canvas.getContext) {
+
+                // use getContext to use the canvas for drawing
+                var ctx = canvas.getContext('2d');
+
+                var sphere = new Sphere(x, y, radio);
+
+                sphere.rotate(pi / 3, pi / 6, pi / 8);
+
+                sphere.draw(ctx);
+            }
+        }
+    </script>
+    <!--<script type="text/javascript">
+        function drawFigures() {
+            // Call jsGraphics() with no parameters if drawing within the entire document 
+            var jg = new jsGraphics("Canvas");    // Use the "Canvas" div for drawing 
+            jg.setColor("maroon");
+            jg.fillEllipse(450, -5, 40, 70);
+            jg.setStroke(1);
+            jg.setColor("#ff6666");
+            jg.drawPolyline(new Array(90, 640, 90), new Array(0, 25, 90));
+            jg.setColor("green");
+            jg.drawRect(100, 40, 200, 18);
+            jg.setColor("blue");
+            jg.setStroke(Stroke.DOTTED);
+            jg.drawRect(-20, 0, 32, 50);
+            jg.drawEllipse(250, 10, 100, 100);
+            jg.paint();
+        }
+    </script>-->
+    <script type="text/javascript">
+        var t = 0; // time in ms
+        var fps = 24; // frames per second
+        var timeInterval = 1000 / fps; // in ms
+        var canvas = null; // canvas DOM object
+        var canvasContext = null; // canvas context
+
+        var rotateVelocity = 50; // pixels / second
+        var rotateDistEachFrame = rotateVelocity * timeInterval / 1000; // ms
+
+        var sphere = null;
+
+        function init() {
+            canvas = document.getElementById("myCanvas");
+            canvasContext = canvas.getContext("2d");
+            initStageObjects();
+            drawStageObjects();
+            setInterval(updateStage, timeInterval);
+        }
+
+        function updateStage() {
+            t += timeInterval;
+            clearCanvas();
+            updateStageObjects();
+            drawStageObjects();
+        }
+
+        function initStageObjects() {
+            sphere = new Sphere(320, 320, 200);
+            sphere.rotate(pi / 4, pi / 4, pi / 4);
+        }
+
+        function drawStageObjects() {
+            sphere.fill(canvasContext);
+            sphere.draw(canvasContext);
+        }
+
+        function updateStageObjects() {
+            //var ran = (Math.random() - 0.5) / 64;
+            var axis = new Vector3D(
+            (sphere.VectorX.Y != NaN ? sphere.VectorX.X / 32 : 0),
+            (sphere.VectorY.Y != NaN ? sphere.VectorY.Y / 32 : 0),
+            pi/256/*(sphere.VectorZ.Z != NaN ? sphere.VectorZ.Z / 64 : ran)*/);
+            //axis.normalize();
+            sphere.rotate(axis.X, axis.Y, axis.Z);
+        }
+
+        function clearCanvas() {
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</head>
+<body onload="init()">
+    <canvas id="myCanvas" width="640" height="640">
+    </canvas>
+    <!--<div>
+        <div id="Canvas" style="position: relative; height: 500px; width: 500px;">
+        </div>
+    </div>-->
+</body>
+</html>

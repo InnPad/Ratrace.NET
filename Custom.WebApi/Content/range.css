@@ -1,0 +1,26 @@
+﻿
+.ui-day-range .ui-slider-input {
+    display: none;
+}
+
+
+.ui-day-range .ui-date-low,
+.ui-day-range .ui-date-high {
+    display: inline-block;
+    width: auto;
+}
+
+.ui-day-range .ui-offset-range {
+    display: inline-block;
+    width: 70%;
+}
+
+    .ui-day-range .ui-offset-range > * {
+        display: inline-block;
+        width: 40%;
+    }
+
+.ui-day-range .ui-offset-thumb {
+    display: inline-block;
+    width: 10%;
+}

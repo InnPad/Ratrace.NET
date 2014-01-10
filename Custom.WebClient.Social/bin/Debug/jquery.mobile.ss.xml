@@ -1,0 +1,1040 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>jquery.mobile.ss</name>
+    </assembly>
+    <members>
+        <member name="F:jQueryApi.SelectMenuOptions.NativeMenu">
+            <summary>
+            To use custom menus on a specific select, just add the 
+            data-native-menu="false" attribute. Alternately, this can also 
+            programmatically set the select menu's nativeMenu configuration 
+            option to false in a callback bound to the mobileinit event to 
+            achieve the same effect. This will globally make all selects use 
+            the custom menu by default. The following must be included in the 
+            page after jQuery is loaded but before jQuery Mobile is loaded.
+            
+            $(document).bind('mobileinit',function(){
+               $.mobile.selectmenu.prototype.options.nativeMenu = false;
+            });
+            </summary>
+        </member>
+        <member name="F:jQueryApi.SelectMenuOptions.HidePlaceholderMenuItems">
+            <summary>
+            Placeholder options
+            
+            It's common for developers to include a "null" option in their 
+            select element to force a user to choose an option. If a 
+            placeholder option is present in your markup, jQuery Mobile 
+            will hide them in the overlay menu, showing only valid choices 
+            to the user, and display the placeholder text inside the menu 
+            as a header. A placeholder option is added when the framework finds:
+            
+            -An option with no value attribute (or an empty value attribute)
+            -An option with no text node
+            -An option with a data-placeholder="true" attribute. (This allows 
+            you to use an option that has a value and a textnode as a placeholder option).
+            
+            You can disable this feature through the selectmenu plugin's 
+            hidePlaceholderMenuItems option, like this:
+            $.mobile.selectmenu.prototype.options.hidePlaceholderMenuItems = false;
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.hash">
+            <summary>
+            The fragment component of the URL, including the leading '#' character.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.host">
+            <summary>
+            The host and port number of the URL.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.hostname">
+            <summary>
+            The name of the host within the URL.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.href">
+            <summary>
+            The original URL that was parsed.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.pathname">
+            <summary>
+            The path of the file or directory referenced by the URL.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.port">
+            <summary>
+            The port specified within the URL. Most URLs rely on the default port for the protocol used, so this may be an empty string most of the time.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.protocol">
+            <summary>
+            The protocol for the URL including the trailing ':' character.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.search">
+            <summary>
+            The query component of the URL including the leading '?' character.
+            But it also contains additional properties that provide access to additional components as well as some common forms of the URL developers access:
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.authority">
+            <summary>
+            The username, password, and host components of the URL
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.directory">
+            <summary>
+            The directory component of the pathname, minus any filename.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.domain">
+            <summary>
+            The protocol and authority components of the URL.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.filename">
+            <summary>
+            The filename within the pathname component, minus the directory.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.hrefNoHash">
+            <summary>
+            The original URL minus the fragment (hash) components.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.hrefNoSearch">
+            <summary>
+            The original URL minus the query (search) and fragment (hash) components.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.password">
+            <summary>
+            The password contained within the authority component.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.UrlObject.username">
+            <summary>
+            The username contained within the authority component.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.allowSamePageTransition">
+            <summary>
+            (boolean, default: false)
+            By default, changePage() ignores requests to change to the current 
+            active page. Setting this option to true, allows the request to 
+            execute. Developers should note that some of the page transitions 
+            assume that the fromPage and toPage of a changePage request are 
+            different, so they may not animate as expected. Developers are 
+            responsible for either providing a proper transition, or turning it 
+            off for this specific case.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.changeHash">
+            <summary>
+            (boolean, default: true)
+            Decides if the hash in the location bar should be updated.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.data">
+            <summary>
+            (object or string, default: undefined)
+            The data to send with an Ajax page request.
+            - Used only when the 'to' argument of changePage() is a URL.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.dataUrl">
+            <summary>
+            (string, default: undefined)
+            The URL to use when updating the browser location upon changePage 
+            completion. If not specified, the value of the data-url attribute 
+            of the page element is used.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.pageContainer">
+            <summary>
+            (jQuery collection, default: $.mobile.pageContainer)
+            Specifies the element that should contain the page.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.reloadPage">
+            <summary>
+            (boolean, default: false)
+            Forces a reload of a page, even if it is already in the DOM of 
+            the page container.
+            - Used only when the 'to' argument of changePage() is a URL.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.reverse">
+            <summary>
+            (boolean, default: false)
+            Decides what direction the transition will run when showing the 
+            page.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.role">
+            <summary>
+            (string, default: undefined)
+            The data-role value to be used when displaying the page. By 
+            default this is undefined which means rely on the value of 
+            the @data-role attribute defined on the element.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.showLoadMsg">
+            <summary>
+            (boolean, default: true)
+            Decides whether or not to show the loading message when 
+            loading external pages.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.transition">
+            <summary>
+            (string, default: $.mobile.defaultPageTransition)
+            The transition to use when showing the page.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.ChangePageOptions.type">
+            <summary>
+            (string, default: "get")
+            Specifies the method ("get" or "post") to use when making a page
+            request.
+            - Used only when the 'to' argument of changePage() is a URL.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.AnimationComplete">
+            <summary>
+            jQuery Mobile exposes the animationComplete plugin, which you can 
+            utilize after adding or removing a class that applies a CSS transition. 
+            It can be used with page transition events.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Blur">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Change">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Click">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.DoubleClick">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Error">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Focus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.FocusIn">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.FocusOut">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.KeyPress">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.KeyDown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.KeyUp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Hover">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.MouseDown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.MouseEnter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.MouseLeave">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.MouseMove">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.MouseOut">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.MouseOver">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.MouseUp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageBeforeLoad">
+            <summary>
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageLoad">
+            <summary>
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageLoadFailed">
+            <summary>
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageBeforeChange">
+            <summary>
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageChange">
+            <summary>
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageChangeFailed">
+            <summary>
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageBeforeShow">
+            <summary>
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageBeforeHide">
+            <summary>
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageShow">
+            <summary>
+            Triggered on the "toPage" after the transition animation has completed. 
+            Callbacks for this event will receive a data object as their 2nd arg.
+            param prevPage (object):
+            A jQuery collection object that contains the page DOM element that we 
+            just transitioned away from. Note that this collection is empty when the 
+            first page is transitioned in during application startup.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageHide">
+            <summary>
+            Triggered on the "fromPage" after the transition animation has completed. 
+            Callbacks for this event will receive a data object as their 2nd arg.
+            jQueryMobile
+            param: nextPage (object)
+            A jQuery collection object that contains the page DOM element that we just 
+            transitioned to.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageBeforeCreate">
+            <summary>
+            Triggered on the page being initialized, before most plugin 
+            auto-initialization occurs.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageCreate">
+            <summary>
+            Triggered when the page has been created in the DOM (via ajax or other) 
+            but before all widgets have had an opportunity to enhance the contained 
+            markup. This event is most useful for user's wishing to create their 
+            own custom widgets for child markup enhancement as the jquery mobile 
+            widgets do.
+            $( '#aboutPage' ).live( 'pagecreate',function(event){
+               ( ":jqmData(role='sweet-plugin')" ).sweetPlugin();
+            });
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageInit">
+            <summary>
+            Triggered on the page being initialized, after initialization occurs. We 
+            recommend binding to this event instead of DOM ready() because this will 
+            work regardless of whether the page is loaded directly or if the content 
+            is pulled into another page as part of the Ajax navigation system.
+            $( '#aboutPage' ).live( 'pageinit',function(event) {
+               alert( 'This page was just enhanced by jQuery Mobile!' );
+            });
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.PageRemove">
+            <summary>
+            By default, the framework removes any non active dynamically loaded 
+            external pages from the DOM as soon as the user navigates away to a 
+            different page. The pageremove event is dispatched just before the 
+            framework attempts to remove the page from the DOM.
+            Event callbacks can call preventDefault on the event object to 
+            prevent the page from being removed. 
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.UpdateLayout">
+            <summary>
+            This event is triggered by components within the framework that 
+            dynamically show/hide content, and is meant as a generic mechanism 
+            to notify other components that they may need to update their size 
+            or position. Within the framework, this event is fired on the 
+            component element whose content was shown/hidden, and bubbles all 
+            the way up to the document element.
+            $( '#foo' ).hide().trigger( 'updatelayout' );
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Tap">
+            <summary>
+            Triggers after a quick, complete touch event.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Taphold">
+            <summary>
+            Triggers after a held complete touch event.
+            $.event.special.tap.tapholdThreshold (default: 750ms) – This value 
+            dictates how long the user must hold their tap before the taphold 
+            event is fired on the target element.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.Swipe">
+            <summary>
+            Triggers when a horizontal drag of 30px or more (and less than 75px 
+            vertically) occurs within 1 second duration but these can be configured:
+            $.event.special.swipe.scrollSupressionThreshold (default: 10px) – More 
+            than this horizontal displacement, and we will suppress scrolling.
+            $.event.special.swipe.durationThreshold (default: 1000ms) – More time 
+            than this, and it isn't a swipe.
+            $.event.special.swipe.horizontalDistanceThreshold (default: 30px) – Swipe 
+            horizontal displacement must be more than this.
+            $.event.special.swipe.verticalDistanceThreshold (default: 75px) – Swipe 
+            vertical displacement must be less than this.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.SwipeLeft">
+            <summary>
+            Triggers when a swipe event occurred moving in the left direction.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.SwipeRight">
+            <summary>
+            Triggers when a swipe event occurred moving in the right direction.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.OrientationChange">
+            <summary>
+            Triggers when a device orientation changes (by turning it vertically 
+            or horizontally). When bound to this event, the callback function has 
+            one argument, the event object. The event object contains an orientation 
+            property equal to either "portrait" or "landscape". 
+            Note that we currently bind to the resize event when orientationchange 
+            is not natively supported, or when $.mobile.orientationChangeEnabled 
+            is set to false.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.ScrollStart">
+            <summary>
+            Triggers when a scroll begins. Note that iOS devices freeze DOM manipulation 
+            during scroll, queuing them to apply when the scroll finishes. We're currently 
+            investigating ways to allow DOM manipulations to apply before a scroll starts.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.ScrollStop">
+            <summary>
+            Triggers when a scroll finishes.
+            jQueryMobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.VClick">
+            <summary>
+            Normalized event for handling touchend or mouse click events. 
+            On touch devices, this event is dispatched *AFTER* vmouseup.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.VMouseCancel">
+            <summary>
+            Normalized event for handling touch or mouse mousecancel events
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.VMouseDown">
+            <summary>
+            Normalized event for handling touchstart or mousedown events
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.VMuseMove">
+            <summary>
+            Normalized event for handling touchmove or mousemove events
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.VMouseOut">
+            <summary>
+            Normalized event for handling touch or mouseout events
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.VMouseOver">
+            <summary>
+            Normalized event for handling touch or mouseover events
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryEvents.VMouseUp">
+            <summary>
+            Normalized event for handling touchend or mouseup events
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryPageBeforeLoadEvent.Url">
+            <summary>
+            The absolute or relative URL that was passed into $.mobile.loadPage() by the caller.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryPageBeforeLoadEvent.AbsoluteUrl">
+            <summary>
+            The absolute version of the url. If url was relative, it is resolved against the url used to load the current active page.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryPageBeforeLoadEvent.DataUrl">
+            <summary>
+            The filtered version of absUrl to be used when identifying the page and updating the browser location when the page is made active.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryPageBeforeLoadEvent.Deferred">
+            <summary>
+            Callbacks that call preventDefault() on the event, *MUST* call resolve() or reject() on this object so that changePage() requests resume processing. 
+            </summary>
+        </member>
+        <member name="F:jQueryApi.jQueryPageBeforeLoadEvent.Options">
+            <summary>
+            This object contains the options that were passed into $.mobile.loadPage().
+            </summary>
+        </member>
+        <member name="F:jQueryApi.LoadPageOptions.data">
+            <summary>
+            (object or string, default: undefined)
+            The data to send with an Ajax page request.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.LoadPageOptions.loadMsgDelay">
+            <summary>
+            (number (in ms), default: 50)
+            Forced delay before the loading message is shown. This is meant to allow 
+            time for a page that has already been visited to be fetched from cache 
+            without a loading message.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.LoadPageOptions.pageContainer">
+            <summary>
+            (jQuery collection, default: $.mobile.pageContainer)
+            Specifies the element that should contain the page after it is loaded.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.LoadPageOptions.reloadPage">
+            <summary>
+            (boolean, default: false)
+            Forces a reload of a page, even if it is already in the DOM of the 
+            page container.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.LoadPageOptions.role">
+            <summary>
+            (string, default: undefined)
+            The data-role value to be used when displaying the page. By default 
+            this is undefined which means rely on the value of the @data-role 
+            attribute defined on the element.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.LoadPageOptions.showLoadMsg">
+            <summary>
+            (boolean, default: false)
+            Decides whether or not to show the loading message when loading 
+            external pages.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.LoadPageOptions.type">
+            <summary>
+            (string, default: "get")
+            Specifies the method ("get" or "post") to use when making a page request.
+            </summary>
+        </member>
+        <member name="T:jQueryApi.Mobile">
+            <summary>
+            jQueryMobile $.mobile
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.activeBtnClass">
+            <summary>
+            (string, default: "ui-btn-active")
+            The CSS class used for "active" button state.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.activePage">
+            <summary>
+            Reference to the page currently in view.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.activePageClass">
+            <summary>
+            (string, default: "ui-page-active")
+            The CSS class used for the page currently in 
+            view or in a transition.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.AjaxEnabled">
+            <summary>
+            (boolean, default: true)
+            jQuery Mobile will automatically handle link clicks and 
+            form submissions through Ajax, when possible. If false, 
+            URL hash listening will be disabled as well, and URLs 
+            will load as ordinary HTTP requests.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.allowCrossDomainPages">
+            <summary>
+            (boolean, default: false)
+            When jQuery Mobile attempts to load an external page, the request 
+            runs through $.mobile.loadPage(). This will only allow cross-domain 
+            requests if $.mobile.allowCrossDomainPages is set to true. Because 
+            the jQuery Mobile framework tracks what page is being viewed within 
+            the browser's location hash, it is possible for a cross-site scripting 
+            (XSS) attack to occur if the XSS code in question can manipulate the 
+            hash and set it to a cross-domain URL of its choice. This is the main
+            reason that the default setting for $.mobile.allowCrossDomainPages is 
+            set to false. In PhoneGap apps that must "phone home" by loading assets 
+            off a remote server, both the $.support.cors AND $.mobile.allowCrossDomainPages 
+            must be set to true.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.autoInitializePage">
+            <summary>
+            (boolean, default: true)
+            When the DOM is ready, the framework should automatically call $.mobile.initializePage. 
+            If false, the page will not initialize and will be visually hidden 
+            until $.mobile.initializePage is manually called.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.HoverDelay">
+            <summary>
+            (integer, default: 200)
+            Set the delay for touch devices to add the hover and down classes 
+            on touch interactions for buttons throughout the framework. Reducing 
+            the delay here results in a more responsive feeling ui, but will 
+            often result in the downstate being applied during page scrolling.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.ChangePageDefaults">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.DefaultDialogTransition">
+            <summary>
+            (string, default: 'pop')
+            Set the default transition for dialog changes that use Ajax.
+            Set to 'none' for no transitions.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.DefaultPageTransition">
+            <summary>
+            (string, default: 'fade')
+            Set the default transition for page changes that use Ajax. 
+            Note: default changed from 'slide' to 'fade' in 1.1. 
+            Set to 'none' for no transitions.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.getMaxScrollForTransition">
+            <summary>
+            (integer, default: 3)
+            Set a scroll position breakpoint for transitions. If the scroll 
+            position is greater than the window height multiplied by the 
+            value that has been set, transition "none" will be used.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.gradeA">
+            <summary>
+            Function that returns a boolean, default: a function returning 
+            the value of $.support.mediaquery
+            Any support conditions that must be met in order to proceed.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.HashListeningEnabled">
+            <summary>
+            (boolean, default: true)
+            jQuery Mobile will automatically listen and handle changes to
+            the location.hash. Disabling this will prevent jQuery Mobile 
+            from handling hash changes, which allows you to handle them 
+            yourself or use simple deep-links within a document that 
+            scroll to a particular id.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.ignoreContentEnabled">
+            <summary>
+            (boolean, default: false)
+            Warning: Setting this property to true will cause performance 
+            degradation on enhancement. Once set, all automatic enhancements 
+            made by the framework to each enhanceable element of the user's 
+            markup will first check for a data-enhance=false parent node. 
+            If one is found the markup will be ignored. This setting and the 
+            accompanying data attribute provide a mechanism through which 
+            users can prevent enhancement over large sections of markup.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.LinkBindingEnabled">
+            <summary>
+            (boolean, default: true)
+            jQuery Mobile will automatically bind the clicks on anchor tags 
+            in your document. Setting this option to false will prevent all 
+            anchor click handling including the addition of active button 
+            state and alternate link bluring. This should only be used when 
+            attempting to delegate the click management to another library 
+            or custom code (such as Backbone.js, in order to use the router 
+            exclusively to handle all hashchange events. The jQuery Mobile 
+            $.mobile.changePage() method could be used to programatically 
+            change the page)
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.LoaderOptions">
+            <summary>
+            Loader prototype options
+            ($.mobile.loader.prototype.options)
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.maxTransitionWidth">
+            <summary>
+            (integer, boolean, default: false)
+            Set a max width for transitions. The option accepts any number 
+            representing a pixel width and its default value false. If a number 
+            value is set, transition "none" will be used if the window is wider 
+            than the specified value.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.minScrollBack">
+            <summary>
+            (integer, default: 250)
+            Minimum scroll distance that will be remembered when returning to a page.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.ns">
+            <summary>
+            (string, default: "")
+            The namespace used in data attributes (e.g., data-role). Can be set to 
+            any string, including a blank string which is the default. When using, 
+            it's clearest if you include a trailing dash, such as "mynamespace-" which 
+            maps to data-mynamespace-foo="...".
+            If you use data- namespacing, you will need to update/override one selector 
+            in the theme CSS. The following data selectors should incorporate the 
+            namespace you're using:
+            .ui-mobile [data-mynamespace-role=page], .ui-mobile [data-mynamespace-role=dialog], .ui-page { ...
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.path">
+            <summary>
+            Url utilities.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.pageLoadErrorMessage">
+            <summary>
+            (string, default: "Error Loading Page")
+            Set the text that appears when a page fails to load through Ajax.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.pageLoadErrorMessageTheme">
+            <summary>
+            (string, default: "e")
+            Set the theme that the error message box uses.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.phonegapNavigationEnabled">
+            <summary>
+            (boolean, default: false)
+            Replace calls to window.history.back with PhoneGap's navigation 
+            helper where it is available. This addresses navigation issues 
+            on page refresh in Android PhoneGap applications using jQuery Mobile.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.PushStateEnabled">
+            <summary>
+            (boolean, default: true)
+            Enhancement to use history.replaceState in supported browsers, 
+            to convert the hash-based Ajax URL into the full document path. 
+            Note that we recommend disabling this feature if Ajax is disabled 
+            or if external links are used extensively.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.subPageUrlKey">
+            <summary>
+            (string, default: "ui-page")
+            The url parameter used for referencing widget-generated sub-pages 
+            (such as those generated by nested listviews). Translates to 
+            example.html&amp;ui-page=subpageIdentifier. 
+            The hash segment before &amp;ui-page= is used by the framework for 
+            making an Ajax request to the URL where the sub-page exists.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.Mobile.transitionFallbacks">
+            <summary>
+            ([transition] string, default: "fade")
+            Set the fallback transition for browsers that don't support 
+            3D transforms for a specific transition type.
+            </summary>
+        </member>
+        <member name="M:jQueryApi.Mobile.ChangePage(System.Object)">
+            <summary>
+            Programmatically change from one page to another. This method 
+            is used internally for the page loading and transitioning that 
+            occurs as a result of clicking a link or submitting a form, 
+            when those features are enabled.
+            </summary>
+            <param name="to">
+            (string or object, required)
+            String: Absolute or relative URL. ("about/us.html")
+            Object: jQuery collection object. ($("#about"))
+            </param>
+        </member>
+        <member name="M:jQueryApi.Mobile.ChangePage(System.Object,jQueryApi.ChangePageOptions)">
+            <summary>
+            Programmatically change from one page to another. This method 
+            is used internally for the page loading and transitioning that 
+            occurs as a result of clicking a link or submitting a form, 
+            when those features are enabled.
+            </summary>
+            <param name="to">
+            (string or object, required)
+            String: Absolute or relative URL. ("about/us.html")
+            Object: jQuery collection object. ($("#about"))
+            </param>
+            <param name="options">
+            (optional)
+            </param>
+        </member>
+        <member name="M:jQueryApi.Mobile.Loading(System.String)">
+            <summary>
+            Show or hide the page loading message, which is configurable via 
+            $.mobile.loader prototype options as described in the widget docs 
+            or can be controlled via a params object.
+            </summary>
+            <param name="show">'show'</param>
+        </member>
+        <member name="M:jQueryApi.Mobile.Loading(System.String,jQueryApi.MobileLoaderOptions)">
+            <summary>
+            Show or hide the page loading message, which is configurable via 
+            $.mobile.loader prototype options as described in the widget docs 
+            or can be controlled via a params object.
+            </summary>
+            <param name="show">'show'</param>
+            <param name="options">
+            (optional)
+            </param>
+        </member>
+        <member name="M:jQueryApi.Mobile.LoadPage(System.String)">
+            <summary>
+            Load an external page, enhance its content, and insert it into 
+            the DOM. This method is called internally by the changePage() 
+            function when its first argument is a URL. This function does 
+            not affect the current active page so it can be used to load 
+            pages in the background. The function returns a deferred promise 
+            object that gets resolved after the page has been enhanced and 
+            inserted into the document.
+            </summary>
+            <param name="url">
+            (string or object, required)
+            A relative or absolute URL.
+            </param>
+        </member>
+        <member name="M:jQueryApi.Mobile.LoadPage(System.String,jQueryApi.LoadPageOptions)">
+            <summary>
+            Load an external page, enhance its content, and insert it into 
+            the DOM. This method is called internally by the changePage() 
+            function when its first argument is a URL. This function does 
+            not affect the current active page so it can be used to load 
+            pages in the background. The function returns a deferred promise 
+            object that gets resolved after the page has been enhanced and 
+            inserted into the document.
+            </summary>
+            <param name="url">
+            (string or object, required)
+            A relative or absolute URL.
+            </param>
+            <param name="options">
+            (optional) 
+            </param>
+        </member>
+        <member name="M:jQueryApi.Mobile.SilentScroll(System.Int32)">
+            <summary>
+            Scroll to a particular Y position without triggering scroll event listeners.
+            </summary>
+            <param name="yPos">
+            (number, defaults to 0).
+            Pass any number to scroll to that Y location.
+            </param>
+        </member>
+        <member name="F:jQueryApi.MobileLoaderOptions.theme">
+            <summary>
+            (string, default: "a")
+            The theme swatch for the message.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.MobileLoaderOptions.text">
+            <summary>
+            (string, default: "loading")
+            The text of the message.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.MobileLoaderOptions.textonly">
+            <summary>
+            (boolean, default: false)
+            If true, the "spinner" image will be hidden when the message is shown.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.MobileLoaderOptions.textVisible">
+            <summary>
+            (boolean, default: false)
+            If true, the text value will be used under the spinner.
+            </summary>
+        </member>
+        <member name="F:jQueryApi.MobileLoaderOptions.html">
+            <summary>
+            (string, default: "")
+            If this is set to a non empty string value, it will be used to replace 
+            the entirety of the loader's inner html.
+            </summary>
+        </member>
+        <member name="M:jQueryApi.MobilePath.Get(System.String)">
+            <summary>
+            Utility method for determining the directory portion of an URL. 
+            If the URL has no trailing slash, the last component of the URL 
+            is considered to be a file.
+            </summary>
+            <param name="url">
+            (string, required)
+            A relative or absolute URL.
+            </param>
+            <returns>
+            This function returns the directory portion of a given URL.
+            </returns>
+        </member>
+        <member name="M:jQueryApi.MobilePath.IsAbsoluteUrl(System.String)">
+            <summary>
+            Utility method for determining if a URL is absolute.
+            </summary>
+            <param name="url">
+            (string, required)
+            A relative or absolute URL.
+            </param>
+            <returns>
+            This function returns a boolean true if the URL is absolute, false if not.
+            </returns>
+        </member>
+        <member name="M:jQueryApi.MobilePath.IsRelativeUrl(System.String)">
+            <summary>
+            Utility method for determining if a URL is a relative variant.
+            </summary>
+            <param name="url">
+            (string, required)
+            A relative or absolute URL.
+            </param>
+            <returns>
+            This function returns a boolean true if the URL is relative, 
+            false if it is absolute.
+            </returns>
+        </member>
+        <member name="M:jQueryApi.MobilePath.IsSameDomain(System.String,System.String)">
+            <summary>
+            Utility method for comparing the domain of 2 URLs.
+            </summary>
+            <param name="url1">
+            (string, required)
+            A relative URL.
+            </param>
+            <param name="url2">
+            (string, required)
+            An absolute URL to resolve against.
+            </param>
+            <returns>
+            This function returns a boolean true if the domains match, 
+            false if they don't.
+            </returns>
+        </member>
+        <member name="M:jQueryApi.MobilePath.MakePathAbsolute(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="url">
+            (string, required)
+            A relative or absolute URL.
+            </param>
+        </member>
+        <member name="M:jQueryApi.MobilePath.MakeUrlAbsolute(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="url">
+            (string, required)
+            A relative or absolute URL.
+            </param>
+        </member>
+        <member name="M:jQueryApi.MobilePath.ParseUrl(System.String)">
+            <summary>
+            Utility method for parsing a URL and its relative variants into 
+            an object that makes accessing the components of the URL easy. 
+            When parsing relative variants, the resulting object will contain 
+            empty string values for missing components (like protocol, host, etc). 
+            Also, when parsing URLs that have no authority, such as tel: urls, 
+            the pathname property of the object will contain the data after the 
+            protocol/scheme colon.
+            </summary>
+            <param name="url">
+            (string, required)
+            A relative or absolute URL.
+            </param>
+            <returns>
+            This function returns an object that contains the various components 
+            of the URL as strings. The properties on the object mimic the browser's 
+            location object.
+            </returns>
+        </member>
+    </members>
+</doc>

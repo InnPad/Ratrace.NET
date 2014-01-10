@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{34D089B5-03AE-4838-8F90-603637A8EB78}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kinetic</RootNamespace>
+    <AssemblyName>kinetic.ss</AssemblyName>
+    <ScriptTemplate>Properties\Script.template</ScriptTemplate>
+    <CodeAnalysisRuleSet>Properties\FxCop.ruleset</CodeAnalysisRuleSet>
+    <GenerateScript>True</GenerateScript>
+    <GenerateResources>True</GenerateResources>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;CODE_ANALYSIS;SCRIPTSHARP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0028, 1591, 1684</NoWarn>
+    <DocumentationFile>bin\Debug\kinetic.ss.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;SCRIPTSHARP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0028, 1591, 1684</NoWarn>
+    <DocumentationFile>bin\Release\kinetic.ss.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Animation.cs" />
+    <Compile Include="Collection.cs" />
+    <Compile Include="Container.cs" />
+    <Compile Include="Filters.cs" />
+    <Compile Include="Frame.cs" />
+    <Compile Include="DragAndDrop.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="Shape.cs" />
+    <Compile Include="Shapes\Blob.cs" />
+    <Compile Include="Shapes\Circle.cs" />
+    <Compile Include="Shapes\Ellipse.cs" />
+    <Compile Include="Shapes\Image.cs" />
+    <Compile Include="Shapes\Line.cs" />
+    <Compile Include="Shapes\Path.cs" />
+    <Compile Include="Shapes\Polygon.cs" />
+    <Compile Include="Shapes\Rect.cs" />
+    <Compile Include="Shapes\RectangularPolygon.cs" />
+    <Compile Include="Shapes\Spline.cs" />
+    <Compile Include="Shapes\Sprite.cs" />
+    <Compile Include="Shapes\Star.cs" />
+    <Compile Include="Shapes\Text.cs" />
+    <Compile Include="Shapes\TextPath.cs" />
+    <Compile Include="Shapes\Wedge.cs" />
+    <Compile Include="Stage.cs" />
+    <Compile Include="Transform.cs" />
+    <Compile Include="Transition.cs" />
+    <Compile Include="Type.cs" />
+    <None Include="packages.config" />
+    <None Include="Properties\FxCop.ruleset" />
+    <None Include="Properties\Script.template" />
+    <Compile Include="Canvas.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="Layer.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Script.jQuery">
+      <HintPath>..\packages\ScriptSharp.Lib.jQuery.0.7.5.0\lib\Script.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="Script.Web">
+      <HintPath>..\packages\ScriptSharp.Lib.HTML.0.7.5.0\lib\Script.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\mscorlib.debug.js" />
+    <Content Include="Scripts\mscorlib.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Custom.WebClient.Base\Custom.WebClient.Base.csproj">
+      <Project>{6f719be8-9856-40f5-86d4-d946d097ea25}</Project>
+      <Name>Custom.WebClient.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\ScriptSharp.0.7.5.1\tools\ScriptSharp.targets" Condition="Exists('..\packages\ScriptSharp.0.7.5.1\tools\ScriptSharp.targets')" />
+</Project>

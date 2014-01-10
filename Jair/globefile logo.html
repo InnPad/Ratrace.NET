@@ -1,0 +1,1056 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>Html 5 - drawing with canvas</title>
+    <style>
+        .container
+        {
+            top: 40px;
+            left: 40px;
+            width: 640px;
+            height: 640px;
+            position: absolute;
+            display: block;
+        }
+        
+        .main
+        {
+            position: relative;
+            height: 640px;
+            display: block;
+            margin: auto auto;
+            padding: 0;
+            width: 640px;
+        }
+        
+        canvas.container
+        {
+            z-index: -1;
+        }
+        
+        div.container
+        {
+            z-index: 9999;
+        }
+        
+        div.content
+        {
+            /*border-style: solid;
+    border-color: #0000ff;
+    border-width: 3px;*/
+            display: block;
+            position: absolute; /*overflow: hidden;
+    text-indent: -999999px;*/
+            background-repeat: no-repeat; /*background-image: url(img.png);*/
+        }
+        
+        div.content img
+        {
+            position: relative;
+        }
+        
+        .notext
+        {
+            overflow: hidden;
+            text-indent: -999999px;
+        }
+        
+        #button
+        {
+            width: 60px;
+            height: 20px;
+            border-color: #555;
+            border-width: 1px;
+            background-color: #d4d4d4;
+        }
+    </style>
+    <script src="jquery-1.4.4.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        // constants
+        var pi = 3.14159265358979323846;
+        var sqrt2div2 = Math.sqrt(2) / 2;
+        var epsilon = 1 / 32;
+        var netflixQuery = "http://odata.netflix.com/Catalog/Titles?$filter=Type eq 'Movie' and ReleaseYear gt 2010 and AverageRating gt 2&$format=json";
+        var pageSize = 20;
+        var movies = new Array();
+        var pageSkip = 0;
+
+        var t = 0; // time in ms
+        var fps = 20; // frames per second
+        var timeInterval = 1000 / fps; // in ms
+        var canvas = null; // canvas DOM object
+        var canvasContext = null; // canvas context
+        var button = null;
+
+        var rotateVelocity = 50; // pixels / second
+        var rotateDistEachFrame = rotateVelocity * timeInterval / 1000; // ms
+
+        var globe = null;
+        var globeFlow = null;
+        var center = new Vector(320, 320, 0);
+        var rotate = true;
+
+        function init() {
+            canvas = document.getElementById("myCanvas");
+            canvasContext = canvas.getContext("2d");
+            initStageObjects();
+            drawStageObjects();
+            setInterval(updateStage, timeInterval);
+
+            jQuery("#button").click(function () {
+                rotate = !rotate;
+            });
+
+            search();
+        }
+
+        function updateStage() {
+            t += timeInterval;
+            clearCanvas();
+            updateStageObjects();
+            drawStageObjects();
+        }
+
+        function initStageObjects() {
+            globe = new Globik();
+            //globe.rotate(pi / 4, pi / 4, pi / 4);
+            globeFlow = new GlobeFlow(globe, jQuery("div.container").get(0), center, 300);
+            globeFlow.init();
+        }
+
+        function drawStageObjects() {
+            Circle.drawCircleDeprecated(canvasContext, center, 158.5, '#000');
+            canvasContext.fillStyle = '#000';
+            canvasContext.fill();
+
+            globe.paint(canvasContext, center, 160, 30);
+            globeFlow.refresh();
+            globeFlow.update(canvasContext);
+        }
+
+        function updateStageObjects() {
+            var ran = (Math.random() - 0.5) / 64;
+            var axis = new Vector(
+            (globe.VectorX.Y != NaN ? globe.VectorX.X / 64 : 0),
+            (globe.VectorY.Y != NaN ? globe.VectorY.Y / 32 : 0),
+            pi / 256/*(sphere.VectorZ.Z != NaN ? sphere.VectorZ.Z / 64 : ran)*/);
+            //axis.normalize();
+            if (rotate) {
+                globe.rotate(axis.X, axis.Y, axis.Z);
+            }
+        }
+
+        function clearCanvas() {
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function callback(response) {
+            var results = null;
+            if (response != null && response.d != null) {
+                if (response.d.results != null && response.d.results.length > 0) {
+                    results = response.d.results;
+                }
+                else if (response.d.length > 0) {
+                    results = response.d;
+                }
+            }
+
+            if (results != null) {
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].BoxArt.LargeUrl != 'http://cdn-8.nflximg.com/en_US/boxshots/large/70122338.jpg') {
+                        movies[movies.length] = results[i];
+                    }
+                }
+                pageSkip = pageSkip + pageSize;
+                if (results.length == pageSize) {
+                    search();
+                }
+            }
+
+        }
+
+        function search() {
+            // Build OData query
+            var query = netflixQuery + "&$top=" + pageSize.toString() + "&$skip=" + pageSkip.toString();
+
+            // Make JSONP call to Netflix
+
+            try {
+                $.getJSON(query, callback);
+            }
+            catch (err) {
+                $.ajax({
+                    dataType: "jsonp",
+                    url: query,
+                    jsonpCallback: "callback",
+                    success: callback
+                });
+            }
+        }
+
+        var pad = function (num, totalChars) {
+            var pad = '0';
+            num = num + '';
+            while (num.length < totalChars) {
+                num = pad + num;
+            }
+            return num;
+        };
+
+        function Color(value) {
+            this.Value = value;
+
+            // Ratio is between 0 and 1
+            this.change = function (ratio, darker) {
+                var color = this.Value;
+
+                // Trim trailing/leading whitespace
+                color = color.replace(/^\s*|\s*$/, '');
+
+                // Expand three-digit hex
+                color = color.replace(
+        /^#?([a-f0-9])([a-f0-9])([a-f0-9])$/i,
+        '#$1$1$2$2$3$3'
+    );
+
+                // Calculate ratio
+                var difference = Math.round(ratio * 256) * (darker ? -1 : 1),
+                // Determine if input is RGB(A)
+        rgb = color.match(new RegExp('^rgba?\\(\\s*' +
+            '(\\d|[1-9]\\d|1\\d{2}|2[0-4][0-9]|25[0-5])' +
+            '\\s*,\\s*' +
+            '(\\d|[1-9]\\d|1\\d{2}|2[0-4][0-9]|25[0-5])' +
+            '\\s*,\\s*' +
+            '(\\d|[1-9]\\d|1\\d{2}|2[0-4][0-9]|25[0-5])' +
+            '(?:\\s*,\\s*' +
+            '(0|1|0?\\.\\d+))?' +
+            '\\s*\\)$'
+        , 'i')),
+        alpha = !!rgb && rgb[4] != null ? rgb[4] : null,
+
+                // Convert hex to decimal
+        decimal = !!rgb ? [rgb[1], rgb[2], rgb[3]] : color.replace(
+            /^#?([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])/i,
+            function () {
+                return parseInt(arguments[1], 16) + ',' +
+                    parseInt(arguments[2], 16) + ',' +
+                    parseInt(arguments[3], 16);
+            }
+        ).split(/,/),
+        returnValue;
+
+                // Return RGB(A)
+                return !!rgb ?
+        'rgb' + (alpha !== null ? 'a' : '') + '(' +
+            Math[darker ? 'max' : 'min'](
+                parseInt(decimal[0], 10) + difference, darker ? 0 : 255
+            ) + ', ' +
+            Math[darker ? 'max' : 'min'](
+                parseInt(decimal[1], 10) + difference, darker ? 0 : 255
+            ) + ', ' +
+            Math[darker ? 'max' : 'min'](
+                parseInt(decimal[2], 10) + difference, darker ? 0 : 255
+            ) +
+            (alpha !== null ? ', ' + alpha : '') +
+            ')' :
+                // Return hex
+        [
+            '#',
+            pad(Math[darker ? 'max' : 'min'](
+                parseInt(decimal[0], 10) + difference, darker ? 0 : 255
+            ).toString(16), 2),
+            pad(Math[darker ? 'max' : 'min'](
+                parseInt(decimal[1], 10) + difference, darker ? 0 : 255
+            ).toString(16), 2),
+            pad(Math[darker ? 'max' : 'min'](
+                parseInt(decimal[2], 10) + difference, darker ? 0 : 255
+            ).toString(16), 2)
+        ].join('');
+            }
+
+            this.lighter = function (ratio) {
+                return this.change(ratio, false);
+            }
+
+            this.darker = function (ratio) {
+                return this.change(ratio, true);
+            }
+        }
+
+        // Vector
+        function Vector(x, y, z) {
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+
+            Vector.angle = function (center, point) {
+                var x = point.X - center.X;
+                var y = point.Y - center.Y;
+
+                var phi = Math.atan(Math.abs(x / y));
+
+                if (x < 0 && y < 0) {
+                    phi = pi + phi;
+                } else if (x < 0) {
+                    phi = 2 * pi - phi;
+                } else if (y < 0) {
+                    phi = pi - phi;
+                }
+
+
+                return phi;
+            }
+
+            this.draw = function (ctx, color) {
+                ctx.fillStyle = color;
+                ctx.fillRect(this.X - 3, this.Y - 3, 7, 7);
+            }
+
+            // point where lines context-midA and midB-ending intersects
+            Vector.calcControl = function (context, midA, midB, ending) {
+
+                var xa = (context.X - midA.X);
+                var xb = (midB.X - ending.X);
+                var ya = (context.Y - midA.Y);
+                var yb = (midB.Y - ending.Y);
+
+                var d = xa * yb - ya * xb;
+
+                var a = (context.X * midA.Y - context.Y * midA.X);
+                var b = (midB.X * ending.Y - midB.Y * ending.X);
+
+                var x = (a * xb - xa * b) / d;
+                var y = (a * yb - ya * b) / d;
+                var z = context.Z + (ending.Z - context.Z) / 2;
+
+                return new Vector(x, y, z);
+            }
+
+            this.length = function () {
+                return Math.sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z);
+            }
+
+            // Normalize
+            this.normalize = function () {
+                var length = this.length();
+
+                this.X = this.X / length;
+                this.Y = this.Y / length;
+                this.Z = this.Z / length;
+            }
+
+            // Cross product
+            this.crossProduct = function (vector) {
+                return new Vector(
+            this.Y * vector.Z - this.Z * vector.Y,
+            this.Z * vector.X - this.X * vector.Z,
+            this.X * vector.Y - this.Y * vector.X);
+            }
+
+            this.image = function () {
+                return new Vector(-this.X, -this.Y, -this.Z);
+            }
+
+            this.plot = function (r) {
+                return new Vector(
+            this.X * r,
+            this.Y * r,
+            this.Z * r);
+            }
+
+            this.rotate = function (vector, sin, cos) {
+                var icos = 1 - cos;
+                var ux = this.X;
+                var uy = this.Y;
+                var uz = this.Z;
+                var uxx = ux * ux;
+                var uyy = uy * uy;
+                var uzz = uz * uz;
+                var uyz = uy * uz;
+                var uzx = uz * ux;
+                var uxy = ux * uy;
+
+                var m11 = cos + uxx * icos;
+                var m12 = uxy * icos - uz * sin;
+                var m13 = uzx * icos + uy * sin;
+
+                var m21 = uxy * icos + uz * sin;
+                var m22 = cos + uyy * icos;
+                var m23 = uyz * icos - ux * sin;
+
+                var m31 = uzx * icos - uy * sin;
+                var m32 = uyz * icos + ux * sin;
+                var m33 = cos + uzz * icos;
+
+                var x = m11 * vector.X + m12 * vector.Y + m13 * vector.Z;
+                var y = m21 * vector.X + m22 * vector.Y + m23 * vector.Z;
+                var z = m31 * vector.X + m32 * vector.Y + m33 * vector.Z;
+
+                return new Vector(x, y, z);
+            }
+
+            // Rotate X
+            this.rotateX = function (cos, sin) {
+                var newY = cos * this.Y - sin * this.Z;
+                var newZ = sin * this.Y + cos * this.Z;
+
+                this.Y = newY;
+                this.Z = newZ;
+
+                this.normalize();
+            }
+
+            // Rotate Y
+            this.rotateY = function (cos, sin) {
+                var newX = cos * this.X + sin * this.Z;
+                var newZ = cos * this.Z - sin * this.X;
+
+                this.X = newX;
+                this.Z = newZ;
+
+                this.normalize();
+            }
+
+            // Rotate Z
+            this.rotateZ = function (cos, sin) {
+                var newX = cos * this.X - sin * this.Y;
+                var newY = sin * this.X + cos * this.Y;
+
+                this.X = newX;
+                this.Y = newY;
+
+                this.normalize();
+            }
+
+            this.toString = function () {
+                return "(x: " + this.X.toString() + "; y: " + this.Y.toString() + "; z: " + this.Z.toString() + ")";
+            }
+
+            this.translate = function (v) {
+                return new Vector(v.X + this.X, v.Y + this.Y, v.Z + this.Z);
+            }
+
+            this.dotProduct = function (v) {
+                return new Vector(v.X * this.X, v.Y * this.Y, v.Z * this.Z);
+            }
+        };
+
+        function Circle() {
+        }
+
+        Circle.plot = function (phi, r) {
+            return new Vector(Math.sin(phi) * r, Math.cos(phi) * r, 0);
+        }
+
+        Circle.smallArc = function (ctx, center, context, r, a, b) {
+            if (a == b) {
+                return false;
+            }
+            if (a > b && a - b > pi) {
+                a = a - 2 * pi;
+            } else if (b > a && b - a > pi) {
+                b = b - 2 * pi;
+            }
+            Circle.traceArc(ctx, center, context, r, a, b);
+        }
+
+        Circle.traceArc = function (ctx, center, context, r, a, b) {
+            var angle = b - a;
+            var accuracy = pi / 16;
+            var steps = Math.abs(Math.ceil(angle / accuracy));
+
+            if (steps == 0) {
+                return context;
+            }
+
+            var mhu = angle / steps;
+
+            var phi = a;
+
+            //ctx.arc(center.X, center.Y, a, b, mhu < 0);
+
+            var eps = mhu < 0 ? -epsilon : epsilon;
+            for (var i = 0; i < steps; i++) {
+
+                var rho = phi + mhu;
+                var ending = center.translate(Circle.plot(rho, r));
+
+
+
+                var control = Vector.calcControl(context,
+    center.translate(Circle.plot(phi + eps, r)),
+    center.translate(Circle.plot(rho - eps, r)), ending);
+
+                ctx.quadraticCurveTo(control.X, control.Y, ending.X, ending.Y);
+
+                phi = rho;
+                context = ending;
+            }
+            return context;
+        }
+
+        Circle.drawArc = function (ctx, center, context, r, a, b, color) {
+            ctx.strokeStyle = color;
+            ctx.moveTo(context.X, context.Y);
+            ctx.beginPath();
+            context = Globe.traceArc(ctx, center, context, r, a, b);
+            ctx.stroke();
+            return context;
+        }
+
+        Circle.traceCircle = function (ctx, center, r) {
+            return Circle.traceArc(ctx, center, center.translate(new Vector(r, 0, 0)), r, 0, 2 * pi);
+        }
+
+        Circle.drawCircle = function (ctx, center, r, color) {
+            return Circle.drawArc(ctx, center, new Vector(r, 0, 0), r, 0, 2 * pi, color);
+        }
+
+        Circle.plot = function (phi, r) {
+            return new Vector(Math.sin(phi) * r, Math.cos(phi) * r, 0);
+        }
+
+        Circle.traceCircleDeprecated = function (ctx, center, r) {
+            var pi4th = pi / 4;
+            var pi8th = pi / 8;
+            var sin_pi4th = Math.sin(pi4th);
+            var tan_pi8th = Math.tan(pi8th);
+
+            var x = center.X;
+            var y = center.Y;
+
+            // start drawing circle CCW at positive x-axis, at distance r from center(x+r)
+            // 1st anchor point...x:(x+r), y:y
+            ctx.quadraticCurveTo(r + x, -tan_pi8th * r + y, sin_pi4th * r + x, -sin_pi4th * r + y);
+
+            // control point...x:radius+x offset, y:tan(pi/8)*radius+y offset
+            // 2nd anchor point...x:cos(pi/4)*radius+x offset, y:sin(pi/4)*radius+y offset
+            // becomes 1st anchor point for next curveTo
+            ctx.quadraticCurveTo(tan_pi8th * r + x, -r + y, x, -r + y);
+            // control point...x:cot(3pi/8)*radius+x offset, y:-radius+ y offset
+            // 2nd anchor point...x:x offset,y:-radius+y offset
+            // etc...
+            ctx.quadraticCurveTo(-tan_pi8th * r + x, -r + y, -sin_pi4th * r + x, -sin_pi4th * r + y);
+            ctx.quadraticCurveTo(-r + x, -tan_pi8th * r + y, -r + x, y);
+            ctx.quadraticCurveTo(-r + x, tan_pi8th * r + y, -sin_pi4th * r + x, sin_pi4th * r + y);
+            ctx.quadraticCurveTo(-tan_pi8th * r + x, r + y, x, r + y);
+            ctx.quadraticCurveTo(tan_pi8th * r + x, r + y, sin_pi4th * r + x, sin_pi4th * r + y);
+            ctx.quadraticCurveTo(r + x, tan_pi8th * r + y, r + x, y);
+        }
+
+        Circle.drawCircleDeprecated = function (ctx, center, r, color) {
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.moveTo(center.X + r, center.Y);
+            Circle.traceCircleDeprecated(ctx, center, r);
+            ctx.stroke();
+        }
+
+        function Sphere() {
+        }
+
+        Sphere.traceArc = function (ctx, center, context, r, a, b, u, v) {
+            var angle = b - a;
+            var accuracy = pi / 16;
+            var steps = Math.abs(Math.ceil(angle / accuracy));
+            steps = 8;
+            var mhu = angle / steps;
+
+            var phi = a;
+
+            for (var i = 0; i < steps; i++) {
+
+                var rho = phi + mhu;
+                var ending = center.translate(Sphere.plot(rho, r, u, v));
+
+                var control = Vector.calcControl(context,
+                center.translate(Sphere.plot(phi + epsilon, r, u, v)),
+                center.translate(Sphere.plot(rho - epsilon, r, u, v)), ending);
+
+                ctx.quadraticCurveTo(control.X, control.Y, ending.X, ending.Y);
+
+                phi = rho;
+                context = ending;
+            }
+            return context;
+        }
+
+        Sphere.drawVisibleArc = function (ctx, center, r, u, v, color) {
+
+            var phi = 0;
+            var rho = 2 * pi;
+            if (v.Z != 0) {
+                phi = Math.atan(-u.Z / v.Z);
+
+                if (v.Z < 0) {
+                    phi = phi + pi;
+                }
+
+                if (phi < 0) {
+                    phi = 2 * pi + phi;
+                } else if (phi > 2 * pi) {
+                    phi = phi - 2 * pi;
+                }
+                rho = phi + pi;
+            }
+
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            var context = Sphere.traceArc(ctx, center, r, phi, rho, u, v);
+            ctx.stroke();
+
+            return context;
+        }
+
+        // To get a parametric equation follow this procedure.
+        // 1. Let N be a unit normal vector for the plane.
+        // 2. Let C be the circle center, and let R be the radius.
+        // 3. Let U be a unit vector from C toward a point on the circle.
+        // 4. Let V = N x U.
+        // 5. Let t be the paramter.
+        // 6. A point P is on the circle if...
+        // P = C + R cos(t) U + R sin(t) V
+        Sphere.plot = function (rho, r, u, v) {
+            var x = r * Math.cos(rho);
+            var y = r * Math.sin(rho);
+
+            var vector = new Vector(
+            x * u.X + y * v.X,
+            x * u.Y + y * v.Y,
+            x * u.Z + y * v.Z);
+
+            return vector;
+        }
+
+        function R8(index) {
+            this.Index = index;
+            this.Color = '#555';
+            this.Vector = new Vector(1, 1, 1);
+            this.X = new Vector(1, 0, 0);
+            this.Y = new Vector(0, 1, 0);
+            this.Z = new Vector(0, 0, 1);
+
+            this.update = function (system, d, h) {
+                var q = 7 - this.Index;
+                var v = this.Vector = new Vector(((q << 1) & 2) - 1, (q & 2) - 1, ((q >> 1) & 2) - 1);
+
+                var x = system.VectorX.plot(v.X);
+                var y = system.VectorY.plot(v.Y);
+                var z = system.VectorZ.plot(v.Z);
+
+                var sin = sqrt2div2 * v.X * v.Y * v.Z;
+                var cos = sqrt2div2;
+
+                var ux = x.rotate(y, sin, cos);
+                var uy = y.rotate(z, sin, cos);
+                var uz = z.rotate(x, sin, cos);
+
+                this.X = ux.plot(d / cos).translate(x.plot(h));
+                this.Y = uy.plot(d / cos).translate(y.plot(h));
+                this.Z = uz.plot(d / cos).translate(z.plot(h));
+
+                switch (this.Index) {
+                    case 0:
+                        this.Color = '#f90';
+                        break;
+                    case 1:
+                        this.Color = '#30f';
+                        break;
+                    case 2:
+                        this.Color = '#063';
+                        break;
+                    case 3:
+                        this.Color = '#39f';
+                        break;
+                    case 4:
+                        this.Color = '#900';
+                        break;
+                    case 5:
+                        this.Color = '#60c';
+                        break;
+                    case 6:
+                        this.Color = '#fc0';
+                        break;
+                    case 7:
+                        this.Color = '#9f3';
+                        break;
+                }
+            }
+
+            this.traceSurface = function (ctx, system, mhu, r, d, h) {
+                var v = this.Vector;
+                var ux = this.X;
+                var uy = this.Y;
+                var uz = this.Z;
+
+                if (ux.Z < 0 && uy.Z < 0 && uz.Z < 0) {
+                    return false;
+                }
+
+                var px = center.translate(ux);
+                var py = center.translate(uy);
+                var pz = center.translate(uz);
+
+                var x = system.VectorX.plot(v.X);
+                var y = system.VectorY.plot(v.Y);
+                var z = system.VectorZ.plot(v.Z);
+
+                var cx = center.translate(x.plot(d));
+                var cy = center.translate(y.plot(d));
+                var cz = center.translate(z.plot(d));
+
+                var phi = new Vector(mhu, mhu, mhu);
+                var rho = new Vector(pi / 2 - mhu, pi / 2 - mhu, pi / 2 - mhu);
+
+                if (ux.Z > 0 && uy.Z > 0 && uz.Z > 0) {
+                    ctx.moveTo(py.X, py.Y);
+                    ctx.beginPath();
+                    ctx.moveTo(py.X, py.Y);
+                    Sphere.traceArc(ctx, cx, py, h, phi.X, rho.X, y, z);
+                    Sphere.traceArc(ctx, cy, pz, h, phi.Y, rho.Y, z, x);
+                    Sphere.traceArc(ctx, cz, px, h, phi.Z, rho.Z, x, y);
+                    ctx.closePath();
+                }
+                else {
+                    var axy, axz, ayx, ayz, azx, azy;
+                    var pxy = px, pxz = px, pyx = py, pyz = py, pzx = pz, pzy = pz;
+
+                    if (ux.Z < 0) {
+                        rho.Y = Math.atan(-uz.Z / ux.Z);
+                        phi.Z = Math.atan(-ux.Z / uy.Z);
+
+                        pxy = cy.translate(Sphere.plot(rho.Y, h, z, x));
+                        pxz = cz.translate(Sphere.plot(phi.Z, h, x, y));
+
+                        axz = Vector.angle(center, pxz);
+                        axy = Vector.angle(center, pxy);
+                    }
+
+                    if (uy.Z < 0) {
+                        phi.X = Math.atan(-uy.Z / uz.Z);
+                        rho.Z = Math.atan(-ux.Z / uy.Z);
+
+                        pyx = cx.translate(Sphere.plot(phi.X, h, y, z));
+                        pyz = cz.translate(Sphere.plot(rho.Z, h, x, y));
+
+                        ayx = Vector.angle(center, pyx);
+                        ayz = Vector.angle(center, pyz);
+                    }
+
+                    if (uz.Z < 0) {
+                        rho.X = Math.atan(-uy.Z / uz.Z);
+                        phi.Y = Math.atan(-uz.Z / ux.Z);
+
+                        pzx = cx.translate(Sphere.plot(rho.X, h, y, z));
+                        pzy = cy.translate(Sphere.plot(phi.Y, h, z, x));
+
+                        azx = Vector.angle(center, pzx);
+                        azy = Vector.angle(center, pzy);
+                    }
+
+                    if (ux.Z > 0 && uy.Z > 0) {
+                        ctx.strokeStyle = '#f00';
+                        ctx.moveTo(pzx.X, pzx.Y);
+                        ctx.beginPath();
+                        Sphere.traceArc(ctx, cy, pzy, h, phi.Y, rho.Y, z, x);
+                        Sphere.traceArc(ctx, cz, pxz, h, phi.Z, rho.Z, x, y); //f
+                        Sphere.traceArc(ctx, cx, pyx, h, phi.X, rho.X, y, z);
+                        Circle.smallArc(ctx, center, pzx, r, azx, azy);
+                    } else if (uy.Z > 0 && uz.Z > 0) {
+                        ctx.strokeStyle = '#0f0';
+                        ctx.moveTo(pxz.X, pxz.Y);
+                        ctx.beginPath();
+                        Sphere.traceArc(ctx, cz, pxz, h, phi.Z, rho.Z, x, y);
+                        Sphere.traceArc(ctx, cx, pyx, h, phi.X, rho.X, y, z); //
+                        Sphere.traceArc(ctx, cy, pzx, h, phi.Y, rho.Y, z, x);
+                        Circle.smallArc(ctx, center, pxy, r, axy, axz);
+                    } else if (uz.Z > 0 && ux.Z > 0) {
+                        ctx.strokeStyle = '#00f';
+                        ctx.moveTo(pyx.X, pyx.Y);
+                        ctx.beginPath();
+                        Sphere.traceArc(ctx, cx, pyx, h, phi.X, rho.X, y, z);
+                        Sphere.traceArc(ctx, cy, pzx, h, phi.Y, rho.Y, z, x); //
+                        Sphere.traceArc(ctx, cz, pxz, h, phi.Z, rho.Z, x, y);
+                        Circle.smallArc(ctx, center, pyz, r, ayz, ayx);
+                    } else if (ux.Z > 0) {
+                        ctx.strokeStyle = '#0ff';
+                        ctx.moveTo(pzy.X, pzy.Y);
+                        ctx.beginPath();
+                        Sphere.traceArc(ctx, cy, pzy, h, phi.Y, rho.Y, z, x);
+                        Sphere.traceArc(ctx, cz, pxz, h, phi.Z, rho.Z, x, y);
+                        Circle.smallArc(ctx, center, pyz, r, ayz, azy);
+                    } else if (uy.Z > 0) {
+                        ctx.strokeStyle = '#ff0';
+                        ctx.moveTo(pxz.X, pxz.Y);
+                        ctx.beginPath();
+                        Sphere.traceArc(ctx, cz, pxz, h, phi.Z, rho.Z, x, y);
+                        Sphere.traceArc(ctx, cx, pyx, h, phi.X, rho.X, y, z);
+                        Circle.smallArc(ctx, center, pzx, r, azx, axz);
+                    } else if (uz.Z > 0) {
+                        ctx.strokeStyle = '#f0f';
+                        ctx.moveTo(pyx.X, pyx.Y);
+                        ctx.beginPath();
+                        Sphere.traceArc(ctx, cx, pyx, h, phi.X, rho.X, y, z);
+                        Sphere.traceArc(ctx, cy, pzy, h, phi.Y, rho.Y, z, x);
+                        Circle.smallArc(ctx, center, pxy, r, axy, ayx);
+                    }
+                }
+                return true;
+            }
+        }
+
+        function Globik() {
+            this.VectorX = new Vector(1, 0, 0);
+            this.VectorY = new Vector(0, 1, 0);
+            this.VectorZ = new Vector(0, 0, 1);
+
+            this.paint = function (ctx, center, r, d) {
+                var h = Math.sqrt(r * r - d * d);
+                var mhu = Math.asin(d / r);
+
+                var octants = new Array();
+                for (var i = 0; i < 8; i++) {
+                    octants[i] = new R8(i);
+                }
+
+                //ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                for (var i = 0; i < 8; i++) {
+                    var r8 = octants[i];
+                    r8.update(this, d, h);
+                    var gradient = null;
+                    try {
+                        var color = new Color(r8.Color);
+                        p0 = center;
+                        p1 = center.translate(Circle.plot(pi / 4, r));
+                        gradient = ctx.createRadialGradient(p0.X, p0.Y, r, p1.X, p1.Y, r);
+                        gradient.addColorStop(0, color.lighter(0.2));
+                        gradient.addColorStop(0.5, color.Value);
+                        gradient.addColorStop(1, color.darker(0.2));
+                    }
+                    catch (err) {
+                        gradient = r8.Color;
+                    }
+                    ctx.fillStyle = gradient;
+                    if (r8.traceSurface(ctx, this, mhu, r, d, h)) {
+                        ctx.fill();
+                    }
+                }
+            }
+
+            this.drawVisibleAxes = function (ctx, center, r, color) {
+
+                // X
+                Sphere.drawVisibleArc(ctx, center, r, this.VectorY, this.VectorZ, color);
+
+                // Y
+                Sphere.drawVisibleArc(ctx, center, r, this.VectorZ, this.VectorX, color);
+
+                // Z
+                Sphere.drawVisibleArc(ctx, center, r, this.VectorX, this.VectorY, color);
+            }
+
+            this.drawVisibleMesh = function (ctx, center, r, count, color) {
+
+                // X
+                Sphere.drawVisibleArc(ctx, center, r, this.VectorY, this.VectorZ, color);
+
+                // Y
+                Sphere.drawVisibleArc(ctx, center, r, this.VectorZ, this.VectorX, color);
+
+                // Z
+                Sphere.drawVisibleArc(ctx, center, r, this.VectorX, this.VectorY, color);
+
+
+                var step = r / count;
+
+                //var a = Math.atan(-u.Z / v.Z);
+
+                for (var i = 1; i < count; i++) {
+
+                    var d = i * step;
+                    var h = Math.sqrt(r * r - d * d);
+
+                    // X
+                    Sphere.drawVisibleArc(ctx, center.translate(this.VectorX.plot(d)), h, this.VectorY, this.VectorZ, color);
+                    Sphere.drawVisibleArc(ctx, center.translate(this.VectorX.plot(-d)), h, this.VectorY, this.VectorZ, color);
+
+                    // Y
+                    Sphere.drawVisibleArc(ctx, center.translate(this.VectorY.plot(d)), h, this.VectorZ, this.VectorX, color);
+                    Sphere.drawVisibleArc(ctx, center.translate(this.VectorY.plot(-d)), h, this.VectorZ, this.VectorX, color);
+
+                    // Z
+                    Sphere.drawVisibleArc(ctx, center.translate(this.VectorZ.plot(d)), h, this.VectorX, this.VectorY, color);
+                    Sphere.drawVisibleArc(ctx, center.translate(this.VectorZ.plot(-d)), h, this.VectorX, this.VectorY, color);
+                }
+            }
+
+
+
+            this.rotate = function (x, y, z) {
+
+                var axis = new Vector(x, y, z);
+
+                //axis.normalize();
+
+                if (x != 0) {
+                    var cosX = Math.cos(axis.X);
+                    var sinX = Math.sin(axis.X);
+                    this.VectorX.rotateX(cosX, sinX);
+                    this.VectorY.rotateX(cosX, sinX);
+                    this.VectorZ.rotateX(cosX, sinX);
+                }
+
+                if (y != 0) {
+                    var cosY = Math.cos(axis.Y);
+                    var sinY = Math.sin(axis.Y);
+                    this.VectorX.rotateY(cosY, sinY);
+                    this.VectorY.rotateY(cosY, sinY);
+                    this.VectorZ.rotateY(cosY, sinY);
+                }
+
+                if (z != 0) {
+                    var cosZ = Math.cos(axis.Z);
+                    var sinZ = Math.sin(axis.Z);
+                    this.VectorX.rotateZ(cosZ, sinZ);
+                    this.VectorY.rotateZ(cosZ, sinZ);
+                    this.VectorZ.rotateZ(cosZ, sinZ);
+                }
+            }
+        }
+
+        function FlowContent(id) {
+            this.Location = null;
+            this.Div = document.createElement('div');
+            this.Div.setAttribute('class', 'content');
+            this.Div.setAttribute('id', id);
+            this.Img = document.createElement('img');
+            this.Div.appendChild(this.Img);
+            this.Img.src = '';
+            this.State = 0;
+        }
+
+        function GlobeFlow(globe, container, center, radio) {
+            this.Globe = globe;
+            this.Center = new Vector(center.X, center.Y, radio + 1);
+            this.Radio = radio;
+            this.Container = container;
+            this.Content = new Array();
+            this.Location = new Array();
+            this.mIndex = 0;
+
+            this.init = function () {
+                for (var i = 0; i < 12; i++) {
+                    var content = new FlowContent('content' + i);
+                    this.Content[i] = content;
+                    this.Container.appendChild(content.Div);
+                }
+            }
+
+            this.refresh = function () {
+
+                var p = this.Center;
+                var g = this.Globe;
+                var r = this.Radio;
+
+                var x = g.VectorX;
+                var y = g.VectorY;
+                var z = g.VectorZ;
+
+                var a = x.plot(r);
+                var b = y.plot(r);
+                var c = z.plot(r);
+
+                this.Location[0] = p.translate(a);
+                this.Location[1] = p.translate(b);
+                this.Location[2] = p.translate(c);
+
+                var d = a.image();
+                var e = b.image();
+                var f = c.image();
+
+                this.Location[3] = p.translate(d);
+                this.Location[4] = p.translate(e);
+                this.Location[5] = p.translate(f);
+
+                var alpha = Math.atan(-y.Z / z.Z);
+                var betta = Math.atan(-z.Z / x.Z);
+                var gamma = Math.atan(-x.Z / y.Z);
+
+                var i = Sphere.plot(alpha, r, y, z);
+                var j = Sphere.plot(betta, r, z, x);
+                var k = Sphere.plot(gamma, r, x, y);
+
+                this.Location[6] = p.translate(i);
+                this.Location[7] = p.translate(j);
+                this.Location[8] = p.translate(k);
+
+                var l = i.image();
+                var m = j.image();
+                var n = k.image();
+
+                this.Location[9] = p.translate(l);
+                this.Location[10] = p.translate(m);
+                this.Location[11] = p.translate(n);
+            }
+
+            this.update = function (ctx) {
+                for (var i = 0; i < 12; i++) {
+                    var location = this.Location[i];
+                    var content = this.Content[i];
+                    var img = content.Img;
+                    var style = content.Div.style;
+
+                    var z = location.Z - this.Center.Z
+                    var zIndex = location.Z;
+                    var width = img.naturalWidth + (img.naturalWidth * z) / (this.Center.Z * 4);
+                    var height = img.naturalHeight + (img.naturalHeight * z) / (this.Center.Z * 4);
+                    var left = location.X - (width / 2);
+                    var top = location.Y - (height / 2);
+
+                    if (content.State == 0 || location.Z + 5 < this.Center.Z) {
+                        if (location.Z + 5 < this.Center.Z) {
+                            var opacity = (zIndex - 1) / (this.Center.Z * 2);
+                            style.opacity = opacity.toString();
+                        }
+
+                        if ((content.State == 0 || (content.State == 1 && z < -(this.Center.Z / 4))) && movies != null && movies.length > 0) {
+                            if (this.mIndex >= movies.length) {
+                                this.mIndex = 0;
+                            }
+                            var index = this.mIndex;
+                            this.mIndex = this.mIndex + 1;
+                            img.src = movies[index].BoxArt.LargeUrl;
+                            content.State = 2;
+                        }
+                    }
+                    else {
+                        style.opacity = '1';
+                        content.State = 1;
+                    }
+                    style.left = left.toString() + 'px';
+                    style.top = top.toString() + 'px';
+                    style.zIndex = Math.floor(location.Z);
+                    style.width = width.toString() + 'px';
+                    style.height = height.toString() + 'px';
+                    content.Img.width = width;
+                    content.Img.height = height;
+                }
+            }
+        }
+    </script>
+</head>
+<body onload="init()">
+    <div class="main">
+        <canvas id="myCanvas" class="container" width="640" height="640">
+        </canvas>
+        <div class="container">
+        </div>
+    </div>
+    <div id="button">
+        <span>rotate</span></div>
+    <div id="dump" class="table">
+    </div>
+</body>
+</html>
